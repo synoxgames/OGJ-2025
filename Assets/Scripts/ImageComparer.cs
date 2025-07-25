@@ -24,29 +24,17 @@ public class ImageComparer : MonoBehaviour
         int paintedWidth = paintedInput.width;
         int paintedHeight = paintedInput.height;
 
-        // repackage the pixels into arrays of the same size as the original textures
-        // the rows and columns are swapped from the original image
-
-        //Color[,] reference = new Color[referenceHeight, referenceWidth];
-        //Color[,] painted = new Color[referenceWidth, referenceHeight];
-
-        // TODO: scale the images to match
-
         Debug.Log("pixels: " + referncePixels.Length);
 
         float badness = 0;
-        int test = 0;
 
         for (int pixelIndex = 0; pixelIndex < referncePixels.Length; pixelIndex ++)
         {
-            float deltaGreen = Mathf.Abs((referncePixels[pixelIndex] - paintedPixels[pixelIndex]).g);
-            float deltaRed = Mathf.Abs((referncePixels[pixelIndex] - paintedPixels[pixelIndex]).r);
-            float deltaBlue = Mathf.Abs((referncePixels[pixelIndex] - paintedPixels[pixelIndex]).b);
-            float deltaAlpha = Mathf.Abs((referncePixels[pixelIndex] - paintedPixels[pixelIndex]).a);
+            Color deltaColour = (referncePixels[pixelIndex] - paintedPixels[pixelIndex]);
 
-            badness += (deltaAlpha + deltaBlue + deltaGreen + deltaRed);
+            badness += (deltaColour.r + deltaColour.g + deltaColour.b + deltaColour.a);
         }
 
-        Debug.Log("badness: " + badness + ", test: " + test);
+        Debug.Log("score: " + 1/badness);
     }
 }
