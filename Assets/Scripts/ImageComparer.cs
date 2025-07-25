@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using ImageMagick;
 
 public class ImageComparer : MonoBehaviour
 {
@@ -14,27 +15,12 @@ public class ImageComparer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // get the pixels from both images
-        Color[] referncePixels = referenceInput.GetPixels();
-        Color[] paintedPixels = paintedInput.GetPixels();
+        MagickImage reference = ImageConverter.ConvertToMagickImage(referenceInput);
+        MagickImage painted = ImageConverter.ConvertToMagickImage(paintedInput);
 
-        int referenceWidth = referenceInput.width;
-        int referenceHeight = referenceInput.height;
+        //reference.Write("C:/Users/ZZetho/Desktop/game 2025/OGJ-2025/Assets/Textures/gaming.png", MagickFormat.Png);
+        //painted.Write("C:/Users/ZZetho/Desktop/game 2025/OGJ-2025/Assets/Textures/gaming2.png", MagickFormat.Png);
 
-        int paintedWidth = paintedInput.width;
-        int paintedHeight = paintedInput.height;
-
-        Debug.Log("pixels: " + referncePixels.Length);
-
-        float badness = 0;
-
-        for (int pixelIndex = 0; pixelIndex < referncePixels.Length; pixelIndex ++)
-        {
-            Color deltaColour = (referncePixels[pixelIndex] - paintedPixels[pixelIndex]);
-
-            badness += (deltaColour.r + deltaColour.g + deltaColour.b + deltaColour.a);
-        }
-
-        Debug.Log("score: " + 1/badness);
+        // TODO: score images
     }
 }
