@@ -13,17 +13,20 @@ public class PaintBrush : DrawingTool
         UpdateUI();
     }
 
+    public void ChangeBrushSize(int dir) {
+        brushSize += dir;
+        brushSize = Mathf.Clamp(brushSize, 1, 100);
+        UpdateUI();
+    }
+
     // Probably a temporary way to change the brushes size
     private void Update() {
         if (Input.GetKey(KeyCode.LeftControl)) {
             if (Input.GetKeyDown(KeyCode.Equals)) {
-                brushSize++;
+                ChangeBrushSize(1);
             } else if (Input.GetKeyDown(KeyCode.Minus)) {
-                brushSize--;
+                ChangeBrushSize(-1);
             }
-
-            brushSize = Mathf.Clamp(brushSize, 1, 100);
-            UpdateUI();
         }
     }
 
