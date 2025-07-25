@@ -1380,7 +1380,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 779745754}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1569294803}
+        m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
+        m_MethodName: ToggleSFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &779745754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2582,7 +2594,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1417740776}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1569294803}
+        m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
+        m_MethodName: ToggleMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1417740776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2766,6 +2790,10 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 2e316ccf6de6c2d43b8c24035d9d0e48, type: 2}
   musicSlider: {fileID: 41812269}
   sfxSlider: {fileID: 907525078}
+  toggleMusicButton: {fileID: 1417740775}
+  toggleSFXButton: {fileID: 779745753}
+  muteSprite: {fileID: -1337296643, guid: 3666cf37b827660438ee325ce5067152, type: 3}
+  unmuteSprite: {fileID: -989145368, guid: 3666cf37b827660438ee325ce5067152, type: 3}
 --- !u!1 &1586102642
 GameObject:
   m_ObjectHideFlags: 0
