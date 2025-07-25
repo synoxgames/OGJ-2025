@@ -11,6 +11,7 @@ public class PaintBrush : DrawingTool
 
     private void Start() {
         UpdateUI();
+        canvas = DrawableCanvas.instance;
     }
 
     public void ChangeBrushSize(int dir) {
@@ -46,14 +47,14 @@ public class PaintBrush : DrawingTool
         if (i < 0) i = 0;
         if (j < 0) j = 0;
 
-        if (iMax >= DrawableCanvas.instance.canvasSizeX) iMax = DrawableCanvas.instance.canvasSizeX - 1;
-        if (jMax >= DrawableCanvas.instance.canvasSizeY) jMax = DrawableCanvas.instance.canvasSizeY - 1;
+        if (iMax >= canvas.canvasSizeX) iMax = canvas.canvasSizeX - 1;
+        if (jMax >= canvas.canvasSizeY) jMax = canvas.canvasSizeY - 1;
 
         for (int x = i; x <= iMax; x++) {
             for (int y = j; y <= jMax; y++) {
 
                 if ((x - xPix)  * (x - xPix) + (y - yPix) * (y - yPix) <= brushSize * brushSize) {
-                    DrawableCanvas.instance.colourMap[x * DrawableCanvas.instance.canvasSizeY + y] = paintColour;
+                    canvas.colourMap[x * canvas.canvasSizeY + y] = paintColour;
                 }
 
             }

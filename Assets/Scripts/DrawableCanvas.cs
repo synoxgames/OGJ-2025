@@ -42,6 +42,14 @@ public class DrawableCanvas : MonoBehaviour
         CreateNewCanvas();
     }
 
+    public void ChangeTool(DrawingTool tool) {
+        activeTool = tool;
+    }
+
+    public void ChangeActiveToolColour(string hex) {
+        activeTool.SetColour(hex);
+    }
+
     private void Update() {
         if (Input.GetMouseButton(0)) {
             SelectPixel();

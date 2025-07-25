@@ -9,6 +9,9 @@ public abstract class DrawingTool : MonoBehaviour
     public Color paintColour;
     public bool useInterpolation = true;
 
+    protected DrawableCanvas canvas = DrawableCanvas.instance;
+
+
     public virtual void SetColour(string hex) {
         ColorUtility.TryParseHtmlString(hex, out paintColour);
     }
