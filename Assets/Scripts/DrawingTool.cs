@@ -4,11 +4,13 @@ using UnityEngine;
 
 public abstract class DrawingTool : MonoBehaviour
 {
+    [Header("Brush Information")]
     public int brushSize = 1;
     public Color paintColour;
+    public bool useInterpolation = true;
 
-    public void SetColour(Color selectedColour) {
-        paintColour = selectedColour;
+    public virtual void SetColour(string hex) {
+        ColorUtility.TryParseHtmlString(hex, out paintColour);
     }
 
     public abstract void UseTool(int xPix, int yPix);

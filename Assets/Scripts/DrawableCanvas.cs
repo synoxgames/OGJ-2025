@@ -24,9 +24,10 @@ public class DrawableCanvas : MonoBehaviour
 
     [HideInInspector]
     public Color[] colourMap;
-
     Camera mainCamera;
     int xPixel = 0, yPixel = 0;
+    int lastX = 0, lastY = 0;
+    bool pressedLastFrame = false;
 
     private void Awake() {
         if (instance != this)
@@ -44,6 +45,8 @@ public class DrawableCanvas : MonoBehaviour
     private void Update() {
         if (Input.GetMouseButton(0)) {
             SelectPixel();
+        } else {
+            pressedLastFrame = false;
         }
     }
 
@@ -66,11 +69,26 @@ public class DrawableCanvas : MonoBehaviour
             xPixel = (int)((cursorPoint.position.x - topLeftPosition.position.x) * canvasSizeX / (bottomRightPosition.position.x - topLeftPosition.position.x));
             yPixel = (int)((cursorPoint.position.y - topLeftPosition.position.y) * canvasSizeX / (bottomRightPosition.position.y - topLeftPosition.position.y));
             UseTool(xPixel, yPixel);
-        }
+        } else pressedLastFrame = false;
     }
 
     public void UseTool(int x, int y) {
+        if (activeTool.useInterpolation) {
+            if (pressedLastFrame && (lastX != xPixel || lastY != yPixel)) {
+                int distance = (int)Mathf.Sqrt((xPixel - lastX) * (xPixel - lastX) + (yPixel - lastY) * (yPixel - lastY));
+
+                for (int i = 1; i <= distance; i++) {
+                    activeTool.UseTool((i * xPixel + (distance - i) * lastX) / distance, (i * yPixel + (distance - i) * lastY) / distance);
+                }
+            }
+        }
+
         activeTool.UseTool(x, y);
+
+        pressedLastFrame = true;
+        lastX = x;
+        lastY = y;
+
         SetTexture();
     }
 
