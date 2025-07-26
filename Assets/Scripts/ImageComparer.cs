@@ -7,18 +7,23 @@ using ImageMagick;
 public class ImageComparer : MonoBehaviour
 {
     [SerializeField]
-    Texture2D referenceInput;
-
+    Texture2D referenceTest;
     [SerializeField]
-    Texture2D paintedInput;
+    Texture2D paintedTest;
 
     // Start is called before the first frame update
     void Start()
     {
+        CompareImages(referenceTest, paintedTest);
+    }
+
+    // returns the average badness per pixel of a painted image compared to a reference image
+    int CompareImages(Texture2D referenceInput, Texture2D paintedInput)
+    { 
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
             Debug.LogError("reference and painting were not the same size");
-            return;
+            return -1;
         }
 
         MagickImage reference = ImageConverter.ConvertToMagickImage(referenceInput);
@@ -35,10 +40,12 @@ public class ImageComparer : MonoBehaviour
         MagickImage badnessMap = new MagickImage(MagickColors.Black, reference.Width, reference.Height);
         var badnessPixels = badnessMap.GetPixels();
 
-        // how far to search for similar pixels
+        // how far (in terms of pixels) to search for simmilar pixels
         int searchRadius = 2;
-        long totalBadness = 0;
+        // how close a colour can be (in terms of combined difference in r g and b values) and still count as the same colour
+        int colourClosenessSympathy = 10;
 
+        long totalBadness = 0;
         for (int y = 0; y < reference.Height; y ++)
         {
             for (int x = 0; x < reference.Width; x ++)
@@ -61,7 +68,6 @@ public class ImageComparer : MonoBehaviour
                 byte[] nearbyPaintedPixels = paintedPixels.GetArea(xMin, yMin, searchWidth, searchHeight);
 
                 // conpare the reference pixel to nearby pixels
-                int colourClosenessSympathy = 10;
                 int bestNearbyPixel = int.MaxValue;
                 byte[] badnessPixel = { 0, 0, 0 };
                 for (int byteIndex = 0; byteIndex < nearbyPaintedPixels.Length; byteIndex += 3)
@@ -89,8 +95,10 @@ public class ImageComparer : MonoBehaviour
             }
         }
 
-        //badnessMap.Write("C:/Users/zzzze/OneDrive/Desktop/game 2025/OGJ-2025/Assets/Textures/badnessMap.png", MagickFormat.Png);
+        badnessMap.Write("Assets/Textures/badnessMap.png", MagickFormat.Png);
 
         Debug.Log("badness per pixel: " + totalBadness / (reference.Width * reference.Height));
+
+        return (int)(totalBadness / reference.Width * reference.Height);
     }
 }
