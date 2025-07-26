@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class CutsceneManager : MonoBehaviour
         yield return StartCoroutine(walkieTalkieZoomOut());
         // black screen fades out and next scene is loaded
         yield return StartCoroutine(FadeOut());
+
     }
 
     // This coroutine is called at the start of the game to fade in from black.
@@ -324,5 +326,8 @@ public class CutsceneManager : MonoBehaviour
 
         // Ensure alpha is exactly 1 at the end
         blackScreen.color = new Color(0, 0, 0, 1);
+
+        //End of the cutscene move to the next scene.
+        SceneManager.LoadScene("Drawing_Test");
     }
 }
