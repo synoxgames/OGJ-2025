@@ -11,16 +11,32 @@ public class ImageComparer : MonoBehaviour
     Texture2D referenceTest;
     [SerializeField]
     Texture2D paintedTest;
+    [SerializeField] public SelectedArt selectedArtRef; // Reference to the SelectedArt ScriptableObject
+    [SerializeField] CompareScript compareScript; // Reference to the CompareScript component
 
     // Start is called before the first frame update
     void Start()
+
     {
+        if (selectedArtRef != null)
+        {
+            Debug.LogError("SelectedArt reference is not set!");
+            return;
+        }
+        else
+        {
+            referenceTest = selectedArtRef.artTexture;
+            compareScript.SetReferenceImage(referenceTest);
+        }
+
+
         if (runAtStart) CompareImages(referenceTest, paintedTest, 6, 30, 3);
     }
 
-    public void CompareGivenImage(Texture2D image) {
+    public int CompareGivenImage(Texture2D image)
+    {
         paintedTest = image;
-        CompareImages(referenceTest, image, 6, 30, 3);
+        return CompareImages(referenceTest, image, 6, 30, 3);
     }
 
 
@@ -30,7 +46,7 @@ public class ImageComparer : MonoBehaviour
     // colour discount = reduces the badness of simmilar colours
     // every n pixels = only compare every n pixels, increases speed by n^2 but reduces accuracy
     int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount, int everyNPixels)
-    { 
+    {
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
             Debug.LogError("reference and painting were not the same size");

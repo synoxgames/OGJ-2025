@@ -85,16 +85,23 @@ public class ArtManager : MonoBehaviour
     void LoadAndDisplayRandomArt()
     {
         // Load all sprites from the Resources/Art/ folder
-        Sprite[] artSprites = Resources.LoadAll<Sprite>("Art");
-        if (artSprites.Length > 0)
+        Texture2D[] artTextures = Resources.LoadAll<Texture2D>("Art");
+        if (artTextures.Length > 0)
         {
             //randomly select an art piece from the Resources/Art/ folder
-            Sprite selectedSprite = artSprites[Random.Range(0, artSprites.Length)];
+            Texture2D selectedTexture = artTextures[Random.Range(0, artTextures.Length)];
+            // Convert the texture to a sprite
+            Sprite selectedSprite = Sprite.Create(
+                selectedTexture,
+                new Rect(0, 0, selectedTexture.width, selectedTexture.height),
+                new Vector2(0.5f, 0.5f)
+            );
+
             // Display the selected art in the scene
             artImage.sprite = selectedSprite;
 
             // Save for later comparison
-            selectedArtRef.selectedArt = selectedSprite;
+            selectedArtRef.selectedTexture = selectedTexture;
             selectedArtRef.artName = selectedSprite.name;
         }
         else

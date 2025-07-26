@@ -24,8 +24,8 @@ public class DrawableCanvas : MonoBehaviour
     public Transform cursorPosition;           // Where the cursor is on the screen
     public Transform topLeftCorner;       // These are to help with knowing where the cursor is on screen
     public Transform bottomRightCorner;   // These are to help with knowing where the cursor is on screen
-    
 
+    [SerializeField] CompareScript compareScript; //reference to the CompareScript component 
     public static DrawableCanvas instance;
 
     [HideInInspector]
@@ -104,7 +104,7 @@ public class DrawableCanvas : MonoBehaviour
 
         // clear the canvas
         ClearCanvas();
-        
+
         // set the canvas to use its texture
         canvasMaterial.SetTexture("_MainTex", canvasTexture);
     }
@@ -223,14 +223,17 @@ public class DrawableCanvas : MonoBehaviour
     }
 
     // Sumbit for checking
-    public void SumbitCanvas() {
+    public void SumbitCanvas()
+    {
         PixelsToCanvas();
         Texture2D rotatedTexture = RotateCanvas(canvasTexture);
-        imgComparer.CompareGivenImage(rotatedTexture);
+        int badnessScore = imgComparer.CompareGivenImage(rotatedTexture);
+        compareScript.SetDrawnImage(rotatedTexture);
     }
 
     // Rotate the Texture2D clockwise (Will add more comments soon)
-    Texture2D RotateCanvas(Texture2D originalTexture) {
+    Texture2D RotateCanvas(Texture2D originalTexture)
+    {
         Color[] originalCanvasPixels = originalTexture.GetPixels();
         Color[] rotatedCanvasPixels = new Color[originalCanvasPixels.Length];
         int w = originalTexture.width;
@@ -238,8 +241,10 @@ public class DrawableCanvas : MonoBehaviour
 
         int rotatedIndex, originalIndex;
 
-        for (int y = 0; y < h; ++y) {
-            for (int x = 0; x < w; ++x) {
+        for (int y = 0; y < h; ++y)
+        {
+            for (int x = 0; x < w; ++x)
+            {
                 rotatedIndex = (x + 1) * h - y - 1;
                 originalIndex = originalCanvasPixels.Length - 1 - (y * w + x);
                 rotatedCanvasPixels[rotatedIndex] = originalCanvasPixels[originalIndex];
