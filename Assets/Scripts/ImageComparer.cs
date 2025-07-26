@@ -43,7 +43,7 @@ public class ImageComparer : MonoBehaviour
         // how far (in terms of pixels) to search for simmilar pixels
         int searchRadius = 2;
         // how close a colour can be (in terms of combined difference in r g and b values) and still count as the same colour
-        int colourClosenessSympathy = 10;
+        int colourClosenessSympathy = 0;
 
         long totalBadness = 0;
         for (int y = 0; y < reference.Height; y ++)
@@ -67,24 +67,44 @@ public class ImageComparer : MonoBehaviour
                 // three bytes per pixel (rgb)
                 byte[] nearbyPaintedPixels = paintedPixels.GetArea(xMin, yMin, searchWidth, searchHeight);
 
+                //int nearbyPixelCount = nearbyPaintedPixels.Length / 3;
+                //Debug.Log("nearby pixels: " + nearbyPixelCount);
+
                 // conpare the reference pixel to nearby pixels
                 int bestNearbyPixel = int.MaxValue;
                 byte[] badnessPixel = { 0, 0, 0 };
                 for (int byteIndex = 0; byteIndex < nearbyPaintedPixels.Length; byteIndex += 3)
                 {
+                    int pixelIndex = byteIndex / 3;
+                    //Debug.Log("pixel index: " + pixelIndex);
+
                     int deltaR = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex] - referncePixel[0]) - colourClosenessSympathy, 0);
                     int deltaG = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 1] - referncePixel[1]) - colourClosenessSympathy, 0);
                     int deltaB = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 2] - referncePixel[2]) - colourClosenessSympathy, 0);
 
+                    // find the position of the current pixel relative to the centre of the search area
+                    int xPos = (int)(pixelIndex % searchWidth);
+                    int yPos = (int)(pixelIndex / searchWidth);
+
+                    int xRelative = (int)((-searchWidth / 2) + xPos);
+                    int yRelative = (int)((-searchHeight / 2) + yPos);
+
+                    //Debug.Log(xRelative + ", " + yRelative);
+
+                    // badness multipler for disance from the reference pixel. currently distacnce^2 + 1
+                    float distanceMultipler = Mathf.Pow(xRelative, 2) + Mathf.Pow(yRelative, 2) + 1;
+
                     // how bad this pixel is compared to the refernce pixel
-                    int badness = deltaR + deltaG + deltaB;
+                    int badness = (int)((deltaR + deltaG + deltaB) * distanceMultipler);
 
                     if (badness < bestNearbyPixel)
                     {
                         bestNearbyPixel = badness;
-                        badnessPixel[0] = (byte)deltaR;
-                        badnessPixel[1] = (byte)deltaG;
-                        badnessPixel[2] = (byte)deltaB;
+
+                        // make a map of how incrorrect the painting is
+                        badnessPixel[0] = (byte)deltaR;    // red
+                        badnessPixel[1] = (byte)deltaG;    // green
+                        badnessPixel[2] = (byte)deltaB;    // blue
                     }
 
                     //Debug.Log("best pixel: " + bestNearbyPixel);
@@ -94,7 +114,6 @@ public class ImageComparer : MonoBehaviour
                 badnessPixels.SetPixel(x, y, badnessPixel);
             }
         }
-
         badnessMap.Write("Assets/Textures/badnessMap.png", MagickFormat.Png);
 
         Debug.Log("badness per pixel: " + totalBadness / (reference.Width * reference.Height));
