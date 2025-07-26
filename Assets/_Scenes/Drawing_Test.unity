@@ -2107,7 +2107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runAtStart: 0
-  referenceTest: {fileID: 2800000, guid: b86c939750183b54fb830e6d62cce1ea, type: 3}
+  referenceTest: {fileID: 2800000, guid: 18107e409e7316e4682a999c322ab02c, type: 3}
   paintedTest: {fileID: 0}
 --- !u!4 &684774152
 Transform:
@@ -3874,7 +3874,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2028458609}
   - {fileID: 1832342632}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -4072,7 +4071,7 @@ RectTransform:
   - {fileID: 1626385699}
   - {fileID: 1360630455}
   m_Father: {fileID: 1737648313}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
@@ -4360,15 +4359,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028458605}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -399.2119, y: -232.53731, z: 0}
-  m_LocalScale: {x: 5.970149, y: 5.970149, z: 1.1940298}
+  m_LocalPosition: {x: 0.5, y: 0.6, z: 0}
+  m_LocalScale: {x: 7.4403, y: 7.4403, z: 1.4880596}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1152660619}
   - {fileID: 257663854}
   - {fileID: 817373490}
-  m_Father: {fileID: 1737648313}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &2028458610
 MonoBehaviour:
@@ -4382,8 +4381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40766a0f2a35f324dab6c64d6e0c93e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasResolutionX: 128
-  canvasResolutionY: 128
+  canvasResolutionX: 256
+  canvasResolutionY: 256
   selectedTool: {fileID: 494476917}
   canvasMaterial: {fileID: 2100000, guid: 4af1bcc204614774092c286765cb8023, type: 2}
   canvasTexture: {fileID: 0}
@@ -4391,7 +4390,6 @@ MonoBehaviour:
   topLeftCorner: {fileID: 1152660619}
   bottomRightCorner: {fileID: 257663854}
   canvasPixels: []
-  tmpTex: {fileID: 0}
 --- !u!1 &2029317562
 GameObject:
   m_ObjectHideFlags: 0
