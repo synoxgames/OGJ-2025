@@ -2108,7 +2108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runAtStart: 0
   referenceTest: {fileID: 2800000, guid: 18107e409e7316e4682a999c322ab02c, type: 3}
-  paintedTest: {fileID: 0}
+  paintedTest: {fileID: 2800000, guid: 674bc1077d95d8f4aba9f771adc20c46, type: 3}
 --- !u!4 &684774152
 Transform:
   m_ObjectHideFlags: 0
