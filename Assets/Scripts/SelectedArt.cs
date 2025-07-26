@@ -8,12 +8,12 @@ public class SelectedArt : ScriptableObject
 
     public Sprite GetSprite()
     {
-        if (selectedTexture == null)
+        if (artTexture == null)
             return null;
 
         return Sprite.Create(
-            selectedTexture,
-            new Rect(0, 0, selectedTexture.width, selectedTexture.height),
+            artTexture,
+            new Rect(0, 0, artTexture.width, artTexture.height),
             new Vector2(0.5f, 0.5f)
         );
     }

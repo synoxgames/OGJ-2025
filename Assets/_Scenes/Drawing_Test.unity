@@ -589,9 +589,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d66215c3e400194abc7430bd4a2a8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageContainer: {fileID: 0}
-  accuracyText: {fileID: 0}
-  moneyText: {fileID: 0}
+  imageContainer: {fileID: 1297062342}
+  accuracyText: {fileID: 883259663}
+  moneyText: {fileID: 2115261892}
+  backgroundImage: {fileID: 886469675}
+  moneyPerAccuracy: 0.1
+  dropDownDuration: 1
 --- !u!114 &126619231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,7 +654,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &126619234
 RectTransform:
@@ -885,7 +888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &240845266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2305,6 +2308,7 @@ MonoBehaviour:
   referenceTest: {fileID: 2800000, guid: 18107e409e7316e4682a999c322ab02c, type: 3}
   paintedTest: {fileID: 2800000, guid: 674bc1077d95d8f4aba9f771adc20c46, type: 3}
   selectedArtRef: {fileID: 11400000, guid: 3b9863ca71a896e45876fe8a602bd056, type: 2}
+  compareScript: {fileID: 126619230}
 --- !u!4 &684774152
 Transform:
   m_ObjectHideFlags: 0
@@ -2512,7 +2516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &883259662
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2596,7 +2600,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2647,7 +2651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &886469674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3707,7 +3711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1379790750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4948,6 +4952,8 @@ MonoBehaviour:
   cursorPosition: {fileID: 817373490}
   topLeftCorner: {fileID: 1152660619}
   bottomRightCorner: {fileID: 257663854}
+  compareCanvas: {fileID: 126619229}
+  compareScript: {fileID: 126619230}
   canvasPixels: []
 --- !u!1 &2029317562
 GameObject:
@@ -5206,7 +5212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2115261891
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5290,7 +5296,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

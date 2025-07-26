@@ -18,7 +18,7 @@ public class ImageComparer : MonoBehaviour
     void Start()
 
     {
-        if (selectedArtRef != null)
+        if (selectedArtRef == null)
         {
             Debug.LogError("SelectedArt reference is not set!");
             return;

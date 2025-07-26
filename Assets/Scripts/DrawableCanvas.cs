@@ -25,6 +25,8 @@ public class DrawableCanvas : MonoBehaviour
     public Transform topLeftCorner;       // These are to help with knowing where the cursor is on screen
     public Transform bottomRightCorner;   // These are to help with knowing where the cursor is on screen
 
+[Header("Compare Information")]
+    [SerializeField] GameObject compareCanvas; //reference to the CompareScript component 
     [SerializeField] CompareScript compareScript; //reference to the CompareScript component 
     public static DrawableCanvas instance;
 
@@ -229,6 +231,7 @@ public class DrawableCanvas : MonoBehaviour
         Texture2D rotatedTexture = RotateCanvas(canvasTexture);
         int badnessScore = imgComparer.CompareGivenImage(rotatedTexture);
         compareScript.SetDrawnImage(rotatedTexture);
+        compareScript.StartAnimation(badnessScore);
     }
 
     // Rotate the Texture2D clockwise (Will add more comments soon)

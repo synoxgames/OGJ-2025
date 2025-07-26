@@ -101,7 +101,7 @@ public class ArtManager : MonoBehaviour
             artImage.sprite = selectedSprite;
 
             // Save for later comparison
-            selectedArtRef.selectedTexture = selectedTexture;
+            selectedArtRef.artTexture = selectedTexture;
             selectedArtRef.artName = selectedSprite.name;
         }
         else
