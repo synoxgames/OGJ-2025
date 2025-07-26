@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4083,8 +4083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40766a0f2a35f324dab6c64d6e0c93e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasResolutionX: 10
-  canvasResolutionY: 10
+  canvasResolutionX: 512
+  canvasResolutionY: 512
   selectedTool: {fileID: 494476917}
   canvasMaterial: {fileID: 2100000, guid: 4af1bcc204614774092c286765cb8023, type: 2}
   canvasTexture: {fileID: 0}

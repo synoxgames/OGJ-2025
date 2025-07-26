@@ -7,7 +7,7 @@ public class ImageConverter
     {
         // convert both images into imagemagick images
         Color[] inputPixels = inputTexture.GetPixels();
-        byte[] inputPixelsCoverted = new byte[inputPixels.Length * 3];
+        byte[] inputPixelsConverted = new byte[inputPixels.Length * 3];
 
         // convert to 24 bit per pixel rgb images, 3 bytes at a time
         int writeIndex = 0;
@@ -20,7 +20,7 @@ public class ImageConverter
 
             byte[] rgb = { r, g, b };
 
-            rgb.CopyTo(inputPixelsCoverted, writeIndex);
+            rgb.CopyTo(inputPixelsConverted, writeIndex);
 
             writeIndex += 3;
         }
@@ -33,6 +33,6 @@ public class ImageConverter
         settings.Format = MagickFormat.Rgb;
 
         // return the converted image
-        return new MagickImage(inputPixelsCoverted, settings);
+        return new MagickImage(inputPixelsConverted, settings);
     }
 }
