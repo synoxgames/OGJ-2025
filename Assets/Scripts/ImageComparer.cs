@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using ImageMagick;
+using System.Linq;
 
 public class ImageComparer : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class ImageComparer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CompareImages(referenceTest, paintedTest);
+        CompareImages(referenceTest, paintedTest, 6, 30);
     }
 
     // returns the average badness per pixel of a painted image compared to a reference image
-    int CompareImages(Texture2D referenceInput, Texture2D paintedInput)
+    // reference image = the image that the painted image gets compared to,
+    // search radius = how many pixels away will the comparer check for simmilar colours
+    // colour discount = reduces the badness of simmilar colours
+    int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount)
     { 
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
@@ -29,21 +33,11 @@ public class ImageComparer : MonoBehaviour
         MagickImage reference = ImageConverter.ConvertToMagickImage(referenceInput);
         MagickImage painted = ImageConverter.ConvertToMagickImage(paintedInput);
 
-        //reference.Write("C:/Users/ZZetho/Desktop/game 2025/OGJ-2025/Assets/Textures/gaming.png", MagickFormat.Png);
-        //painted.Write("C:/Users/ZZetho/Desktop/game 2025/OGJ-2025/Assets/Textures/gaming2.png", MagickFormat.Png);
-
-        // TODO: score images
-
         IPixelCollection<byte> referencePixels = reference.GetPixels();
         IPixelCollection<byte> paintedPixels = painted.GetPixels();
 
         MagickImage badnessMap = new MagickImage(MagickColors.Black, reference.Width, reference.Height);
         var badnessPixels = badnessMap.GetPixels();
-
-        // how far (in terms of pixels) to search for simmilar pixels
-        int searchRadius = 2;
-        // how close a colour can be (in terms of combined difference in r g and b values) and still count as the same colour
-        int colourClosenessSympathy = 0;
 
         long totalBadness = 0;
         for (int y = 0; y < reference.Height; y ++)
@@ -78,9 +72,9 @@ public class ImageComparer : MonoBehaviour
                     int pixelIndex = byteIndex / 3;
                     //Debug.Log("pixel index: " + pixelIndex);
 
-                    int deltaR = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex] - referncePixel[0]) - colourClosenessSympathy, 0);
-                    int deltaG = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 1] - referncePixel[1]) - colourClosenessSympathy, 0);
-                    int deltaB = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 2] - referncePixel[2]) - colourClosenessSympathy, 0);
+                    int deltaR = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex] - referncePixel[0]) - colourDiscount, 0);
+                    int deltaG = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 1] - referncePixel[1]) - colourDiscount, 0);
+                    int deltaB = Math.Max(Math.Abs(nearbyPaintedPixels[byteIndex + 2] - referncePixel[2]) - colourDiscount, 0);
 
                     // find the position of the current pixel relative to the centre of the search area
                     int xPos = (int)(pixelIndex % searchWidth);
@@ -102,11 +96,10 @@ public class ImageComparer : MonoBehaviour
                         bestNearbyPixel = badness;
 
                         // make a map of how incrorrect the painting is
-                        badnessPixel[0] = (byte)deltaR;    // red
-                        badnessPixel[1] = (byte)deltaG;    // green
-                        badnessPixel[2] = (byte)deltaB;    // blue
+                        badnessPixel[0] = (byte)Math.Min(deltaR, 255);    // red
+                        badnessPixel[1] = (byte)Math.Min(deltaG, 255);    // green
+                        badnessPixel[2] = (byte)Math.Min(deltaB, 255);    // blue
                     }
-
                     //Debug.Log("best pixel: " + bestNearbyPixel);
                 }
 
@@ -114,10 +107,22 @@ public class ImageComparer : MonoBehaviour
                 badnessPixels.SetPixel(x, y, badnessPixel);
             }
         }
+        // create the debug map
+        badnessMap.Flip();
         badnessMap.Write("Assets/Textures/badnessMap.png", MagickFormat.Png);
 
-        Debug.Log("badness per pixel: " + totalBadness / (reference.Width * reference.Height));
+        // normalize badness per pixel
+        int averageBadness = (int)(totalBadness / (reference.Width * reference.Height));
 
-        return (int)(totalBadness / reference.Width * reference.Height);
+        // use whatever normalized cross correlation is to compare the images
+        double crossCorrelation = reference.Compare(painted, ErrorMetric.NormalizedCrossCorrelation);
+        //Debug.Log(error);
+
+        // discount badness depending on how close cross correlation thinks the images are
+        float multiplier = (float)(0.5f + (0.5f * crossCorrelation));
+
+        Debug.Log("badness: " + averageBadness * multiplier);
+
+        return (int)(averageBadness * multiplier);
     }
 }
