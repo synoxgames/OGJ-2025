@@ -89,7 +89,7 @@ public class ImageComparer : MonoBehaviour
             }
         }
 
-        badnessMap.Write("C:/Users/zzzze/OneDrive/Desktop/game 2025/OGJ-2025/Assets/Textures/badnessMap.png", MagickFormat.Png);
+        //badnessMap.Write("C:/Users/zzzze/OneDrive/Desktop/game 2025/OGJ-2025/Assets/Textures/badnessMap.png", MagickFormat.Png);
 
         Debug.Log("badness per pixel: " + totalBadness / (reference.Width * reference.Height));
     }
