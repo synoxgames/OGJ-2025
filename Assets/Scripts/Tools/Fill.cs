@@ -17,54 +17,58 @@ public class Fill : DrawingTool {
 
     public override void UseTool(int xPix, int yPix) {
         Point initalNode = new Point(xPix, yPix);
-        Color refColour = canvas.colourMap[xPix + yPix * canvas.canvasSizeX];
-        Queue<Point> nodes = new Queue<Point>();
+        Color refColour = canvas.colourMap[GetIndex(xPix, yPix)];
+        if (refColour == paintColour) return;
 
+        Queue<Point> nodes = new Queue<Point>();
         nodes.Enqueue(initalNode);
 
         while (nodes.Count > 0) {
             Point current = nodes.Dequeue();
-            
+
             // Going right of the pixel
             for (int i = current.x; i < canvas.canvasSizeX; i++) {
-                Color C = canvas.colourMap[i + current.y * canvas.canvasSizeX];
+                Color C = canvas.colourMap[GetIndex(i, current.y)];
+                if (C != refColour) break;
+                canvas.colourMap[GetIndex(i, current.y)] = paintColour;
 
-                if (C != refColour || C == paintColour) break;
-                canvas.colourMap[i + current.y * canvas.canvasSizeX] = paintColour;
-
-                // Checking pixel above
+                // Check pixel above
                 if (current.y + 1 < canvas.canvasSizeY) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX + canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y + 1));
+                    C = canvas.colourMap[GetIndex(i, current.y + 1)];
+                    if (C == refColour) nodes.Enqueue(new Point(i, current.y + 1));
                 }
 
-                // Checking pixel below
+                // Check pixel below
                 if (current.y - 1 >= 0) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX - canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y - 1));
+                    C = canvas.colourMap[GetIndex(i, current.y - 1)];
+                    if (C == refColour) nodes.Enqueue(new Point(i, current.y - 1));
                 }
             }
 
             // Going left of the pixel
             for (int i = current.x - 1; i >= 0; i--) {
-                Color C = canvas.colourMap[i + current.y * canvas.canvasSizeX];
+                Color C = canvas.colourMap[GetIndex(i, current.y)];
+                if (C != refColour) break;
+                canvas.colourMap[GetIndex(i, current.y)] = paintColour;
 
-                if (C != refColour || C == paintColour) break;
-                canvas.colourMap[i + current.y * canvas.canvasSizeX] = paintColour;
-
-                // Checking pixel above
+                // Check pixel above
                 if (current.y + 1 < canvas.canvasSizeY) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX + canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y + 1));
+                    C = canvas.colourMap[GetIndex(i, current.y + 1)];
+                    if (C == refColour) nodes.Enqueue(new Point(i, current.y + 1));
                 }
 
-                // Checking pixel below
+                // Check pixel below
                 if (current.y - 1 >= 0) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX - canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y - 1));
+                    C = canvas.colourMap[GetIndex(i, current.y - 1)];
+                    if (C == refColour) nodes.Enqueue(new Point(i, current.y - 1));
                 }
-
             }
         }
+    }
+
+    int GetIndex(int x, int y) {
+        int rotatedX = y;
+        int rotatedY = canvas.canvasSizeX - 1 - x;
+        return rotatedX + rotatedY * canvas.canvasSizeX;
     }
 }

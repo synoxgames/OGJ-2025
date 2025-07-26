@@ -79,10 +79,17 @@ public class DrawableCanvas : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 10f)) {
             cursorPoint.position = hit.point;
-            xPixel = (int)((cursorPoint.position.x - topLeftPosition.position.x) * canvasSizeX / (bottomRightPosition.position.x - topLeftPosition.position.x));
-            yPixel = (int)((cursorPoint.position.y - topLeftPosition.position.y) * canvasSizeX / (bottomRightPosition.position.y - topLeftPosition.position.y));
+
+            float relativeX = (cursorPoint.localPosition.x - topLeftPosition.localPosition.x) / (bottomRightPosition.localPosition.x - topLeftPosition.localPosition.x);
+            float relativeY = (cursorPoint.localPosition.y - topLeftPosition.localPosition.y) / (bottomRightPosition.localPosition.y - topLeftPosition.localPosition.y);
+
+            yPixel = (int)(relativeX * canvasSizeX);
+            xPixel = (int)((relativeY) * canvasSizeY);
+
             UseTool(xPixel, yPixel);
-        } else pressedLastFrame = false;
+        } else {
+            pressedLastFrame = false;
+        }
     }
 
     public void UseTool(int x, int y) {
