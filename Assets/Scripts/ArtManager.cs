@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 /**
  * ArtManager is responsible for managing art-related functionalities in the game.
@@ -19,6 +20,7 @@ public class ArtManager : MonoBehaviour
     [SerializeField] public Image artImage; // Reference to the image component for displaying art
     [SerializeField] public float displayTime = 5f; // Time to show user art before playing final animation
     [SerializeField] public TMP_Text timerText; // Reference to the timer text component
+    [SerializeField] private SelectedArt selectedArtRef; // Reference to the SelectedArt ScriptableObject
     [Header("UI Elements")]
     [SerializeField] public TMP_Text speechBubbleText; // Reference to the speech bubble text component
     [SerializeField] public Image speechBubbleImage; // Reference to the speech bubble image component
@@ -28,7 +30,7 @@ public class ArtManager : MonoBehaviour
     [SerializeField] public float fadeDuration = 1f; // Duration of the fade effect
     [SerializeField] public Image blackScreen; // Reference to the black screen image for fade effects
 
-    private string artPath = "Art/"; // Path to the art folder
+    private string artPath = "Art"; // Path to the art folder
 
     private bool hasStartedFinalAnimation = false; // Flag to prevent multiple final animations
     void Awake()
@@ -51,17 +53,8 @@ public class ArtManager : MonoBehaviour
         speechBubbleImage.rectTransform.localScale = new Vector3(0, 1, 1);
         speechBubbleText.gameObject.SetActive(false);
 
-        //randomly select an art piece from the Art folder
-        string[] artFiles = System.IO.Directory.GetFiles(Application.dataPath + "/" + artPath, "*.png");
-        if (artFiles.Length > 0)
-        {
-            string randomArtFile = artFiles[Random.Range(0, artFiles.Length)];
-            LoadAndDisplayArt(randomArtFile);
-        }
-        else
-        {
-            Debug.LogError("No art files found in the specified path: " + artPath);
-        }
+        // Load and display a random art piece
+        LoadAndDisplayRandomArt("RandomArt");
     }
 
     // Update is called once per frame
@@ -79,15 +72,21 @@ public class ArtManager : MonoBehaviour
         }
     }
 
-    void LoadAndDisplayArt(string artFilePath)
+    // Function to load and display a random art piece and save it to SelectedArt
+    void LoadAndDisplayRandomArt(string artName)
     {
-        // Load the art texture
-        Texture2D texture = new Texture2D(2, 2);
-        byte[] fileData = System.IO.File.ReadAllBytes(artFilePath);
-        texture.LoadImage(fileData); // Load the image data into the texture
-
-        // Set the sprite to the image component
-        artImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        //randomly select an art piece from the Resources/Art/ folder
+        Sprite[] artSprites = Resources.LoadAll<Sprite>("Art");
+        if (artSprites.Length > 0)
+        {
+            Sprite selectedSprite = artSprites[Random.Range(0, artSprites.Length)];
+            artImage.sprite = selectedSprite;
+            selectedArtRef.selectedArt = selectedSprite; // Save for later comparison
+        }
+        else
+        {
+            Debug.LogError("Art not found: " + artName);
+        }
     }
 
     IEnumerator FinalAnimation()
