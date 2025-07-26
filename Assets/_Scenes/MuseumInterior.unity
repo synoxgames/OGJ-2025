@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   artImage: {fileID: 277962459}
-  displayTime: 5
+  displayTime: 10
   timerText: {fileID: 1315299532}
   selectedArtRef: {fileID: 11400000, guid: 3b9863ca71a896e45876fe8a602bd056, type: 2}
   speechBubbleText: {fileID: 1886085821}
