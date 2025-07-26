@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using ImageMagick;
-using System.Linq;
 
 public class ImageComparer : MonoBehaviour
 {

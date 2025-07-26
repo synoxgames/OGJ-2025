@@ -4,64 +4,83 @@ using UnityEngine;
 
 public class Fill : DrawingTool {
 
-    struct Point {
+    struct Pixel
+    {
         public int x, y;
         
-        public Point(int x, int y) { this.x = x; this.y = y; }
+        public Pixel(int x, int y)
+        {
+            this.x = x; this.y = y;
+        }
     }
 
-    private void Start() {
+    private void Start()
+    {
         canvas = DrawableCanvas.instance;
     }
 
+    // fill every connected pixel of the same colour with the fill colour
+    public override void UseTool(int canvaxPixelX, int canvaxPixelY)
+    {
+        // the pixel to start filling from
+        Pixel initialPixel = new Pixel(canvaxPixelX, canvaxPixelY);
 
-    public override void UseTool(int xPix, int yPix) {
-        Point initalNode = new Point(xPix, yPix);
-        Color refColour = canvas.colourMap[xPix + yPix * canvas.canvasSizeX];
-        Queue<Point> nodes = new Queue<Point>();
+        Debug.Log(canvaxPixelX + ", " + canvaxPixelY);
 
-        nodes.Enqueue(initalNode);
+        // find the colour of the pixel to start filling from
+        Color colourToFill = canvas.canvasPixels[canvas.GetPixelIndexAt(canvaxPixelX, canvaxPixelY)];
 
-        while (nodes.Count > 0) {
-            Point current = nodes.Dequeue();
+        // a queue of pixels that are to be filled
+        Queue<Pixel> pixelsToFill = new Queue<Pixel>();
+        pixelsToFill.Enqueue(initialPixel);
+
+        while (pixelsToFill.Count > 0)
+        {
+            Pixel current = pixelsToFill.Dequeue();
             
             // Going right of the pixel
-            for (int i = current.x; i < canvas.canvasSizeX; i++) {
-                Color C = canvas.colourMap[i + current.y * canvas.canvasSizeX];
+            for (int i = current.x; i < canvas.canvasResolutionX; i++)
+            {
+                Color fillingColour = canvas.canvasPixels[canvas.GetPixelIndexAt(current.x + 1, current.y)];
 
-                if (C != refColour || C == paintColour) break;
-                canvas.colourMap[i + current.y * canvas.canvasSizeX] = paintColour;
+                if (fillingColour != colourToFill || fillingColour == paintColour) break;
+                canvas.canvasPixels[canvas.GetPixelIndexAt(current.x + 1, current.y)] = paintColour;
 
                 // Checking pixel above
-                if (current.y + 1 < canvas.canvasSizeY) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX + canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y + 1));
+                if (current.y + 1 < canvas.canvasResolutionY)
+                {
+                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX + canvas.canvasResolutionX];
+                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y + 1));
                 }
 
                 // Checking pixel below
-                if (current.y - 1 >= 0) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX - canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y - 1));
+                if (current.y - 1 >= 0)
+                {
+                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX - canvas.canvasResolutionX];
+                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y - 1));
                 }
             }
 
             // Going left of the pixel
-            for (int i = current.x - 1; i >= 0; i--) {
-                Color C = canvas.colourMap[i + current.y * canvas.canvasSizeX];
+            for (int i = current.x - 1; i >= 0; i--)
+            {
+                Color fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX];
 
-                if (C != refColour || C == paintColour) break;
-                canvas.colourMap[i + current.y * canvas.canvasSizeX] = paintColour;
+                if (fillingColour != colourToFill || fillingColour == paintColour) break;
+                canvas.canvasPixels[i + current.y * canvas.canvasResolutionX] = paintColour;
 
                 // Checking pixel above
-                if (current.y + 1 < canvas.canvasSizeY) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX + canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y + 1));
+                if (current.y + 1 < canvas.canvasResolutionY)
+                {
+                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX + canvas.canvasResolutionX];
+                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y + 1));
                 }
 
                 // Checking pixel below
-                if (current.y - 1 >= 0) {
-                    C = canvas.colourMap[i + current.y * canvas.canvasSizeX - canvas.canvasSizeX];
-                    if (C == refColour && C != paintColour) nodes.Enqueue(new Point(i, current.y - 1));
+                if (current.y - 1 >= 0)
+                {
+                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX - canvas.canvasResolutionX];
+                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y - 1));
                 }
 
             }
