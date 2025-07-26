@@ -30,6 +30,9 @@ public class ArtManager : MonoBehaviour
     [SerializeField] public float fadeDuration = 1f; // Duration of the fade effect
     [SerializeField] public Image blackScreen; // Reference to the black screen image for fade effects
 
+    [Header("Debug Settings")]
+    [SerializeField] public bool debug = false; // Enable debug mode for testing purposes
+
     private string artPath = "Art"; // Path to the art folder
 
     private bool hasStartedFinalAnimation = false; // Flag to prevent multiple final animations
@@ -54,12 +57,18 @@ public class ArtManager : MonoBehaviour
         speechBubbleText.gameObject.SetActive(false);
 
         // Load and display a random art piece
-        LoadAndDisplayRandomArt("RandomArt");
+        LoadAndDisplayRandomArt();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (debug && Input.GetKeyDown(KeyCode.Space))
+        {
+            // For debugging purposes, loads the art display test scene 
+            SceneManager.LoadScene("Art_Display_Test");
+        }
+
         // update timer
         displayTime -= Time.deltaTime;
         timerText.text = Mathf.Ceil(displayTime).ToString();
@@ -73,19 +82,24 @@ public class ArtManager : MonoBehaviour
     }
 
     // Function to load and display a random art piece and save it to SelectedArt
-    void LoadAndDisplayRandomArt(string artName)
+    void LoadAndDisplayRandomArt()
     {
-        //randomly select an art piece from the Resources/Art/ folder
+        // Load all sprites from the Resources/Art/ folder
         Sprite[] artSprites = Resources.LoadAll<Sprite>("Art");
         if (artSprites.Length > 0)
         {
+            //randomly select an art piece from the Resources/Art/ folder
             Sprite selectedSprite = artSprites[Random.Range(0, artSprites.Length)];
+            // Display the selected art in the scene
             artImage.sprite = selectedSprite;
-            selectedArtRef.selectedArt = selectedSprite; // Save for later comparison
+
+            // Save for later comparison
+            selectedArtRef.selectedArt = selectedSprite;
+            selectedArtRef.artName = selectedSprite.name;
         }
         else
         {
-            Debug.LogError("Art not found: " + artName);
+            Debug.LogError("Art not found: " + artPath);
         }
     }
 
