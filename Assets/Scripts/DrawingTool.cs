@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class DrawingTool : MonoBehaviour
 {
     [Header("Brush Information")]
+    public string toolName;
     public int brushSize = 1;
     public Color paintColour;
     public bool useInterpolation = true;

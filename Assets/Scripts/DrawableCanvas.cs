@@ -19,6 +19,7 @@ public class DrawableCanvas : MonoBehaviour
     public Transform cursorPoint;           // Where the cursor is on the screen
     public Transform topLeftPosition;       // These are to help with knowing where the cursor is on screen
     public Transform bottomRightPosition;   // These are to help with knowing where the cursor is on screen
+    
 
     public static DrawableCanvas instance;
 
@@ -28,6 +29,7 @@ public class DrawableCanvas : MonoBehaviour
     int xPixel = 0, yPixel = 0;
     int lastX = 0, lastY = 0;
     bool pressedLastFrame = false;
+    ToolUIHandler uiHandler;
 
     private void Awake() {
         if (instance != this)
@@ -36,6 +38,7 @@ public class DrawableCanvas : MonoBehaviour
 
 
         mainCamera = Camera.main;
+        uiHandler = FindObjectOfType<ToolUIHandler>();
     }
 
     private void Start() {
@@ -44,10 +47,12 @@ public class DrawableCanvas : MonoBehaviour
 
     public void ChangeTool(DrawingTool tool) {
         activeTool = tool;
+        uiHandler.ChangeTool(tool);
     }
 
     public void ChangeActiveToolColour(string hex) {
         activeTool.SetColour(hex);
+        uiHandler.ChangeTool(activeTool);
     }
 
     private void Update() {
