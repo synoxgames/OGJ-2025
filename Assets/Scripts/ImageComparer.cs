@@ -6,6 +6,7 @@ using ImageMagick;
 
 public class ImageComparer : MonoBehaviour
 {
+    public bool runAtStart = true;
     [SerializeField]
     Texture2D referenceTest;
     [SerializeField]
@@ -14,8 +15,14 @@ public class ImageComparer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CompareImages(referenceTest, paintedTest, 6, 30, 3);
+        if (runAtStart) CompareImages(referenceTest, paintedTest, 6, 30, 3);
     }
+
+    public void CompareGivenImage(Texture2D image) {
+        paintedTest = image;
+        CompareImages(referenceTest, image, 6, 30, 3);
+    }
+
 
     // returns the average badness per pixel of a painted image compared to a reference image
     // reference image = the image that the painted image gets compared to,

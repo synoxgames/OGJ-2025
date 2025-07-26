@@ -41,6 +41,7 @@ public class DrawableCanvas : MonoBehaviour
     bool toolUsedLastFrame = false;
     // the ui that us used to select tools / colours
     ToolUIHandler uiHandler;
+    ImageComparer imgComparer;
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class DrawableCanvas : MonoBehaviour
         mainCamera = Camera.main;
         // get the ui manager
         uiHandler = FindObjectOfType<ToolUIHandler>();
+        imgComparer = FindObjectOfType<ImageComparer>();
     }
 
     private void Start()
@@ -218,5 +220,35 @@ public class DrawableCanvas : MonoBehaviour
 
         // draw the cleared pixels onto the canvas
         PixelsToCanvas();
+    }
+
+    // Sumbit for checking
+    public void SumbitCanvas() {
+        PixelsToCanvas();
+        Texture2D rotatedTexture = RotateCanvas(canvasTexture);
+        imgComparer.CompareGivenImage(rotatedTexture);
+    }
+
+    // Rotate the Texture2D clockwise (Will add more comments soon)
+    Texture2D RotateCanvas(Texture2D originalTexture) {
+        Color[] originalCanvasPixels = originalTexture.GetPixels();
+        Color[] rotatedCanvasPixels = new Color[originalCanvasPixels.Length];
+        int w = originalTexture.width;
+        int h = originalTexture.height;
+
+        int rotatedIndex, originalIndex;
+
+        for (int y = 0; y < h; ++y) {
+            for (int x = 0; x < w; ++x) {
+                rotatedIndex = (x + 1) * h - y - 1;
+                originalIndex = originalCanvasPixels.Length - 1 - (y * w + x);
+                rotatedCanvasPixels[rotatedIndex] = originalCanvasPixels[originalIndex];
+            }
+        }
+
+        Texture2D rotatedTexture = new Texture2D(h, w, TextureFormat.RGBA32, false);
+        rotatedTexture.SetPixels(rotatedCanvasPixels);
+        rotatedTexture.Apply();
+        return rotatedTexture;
     }
 }
