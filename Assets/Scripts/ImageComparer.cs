@@ -15,14 +15,15 @@ public class ImageComparer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CompareImages(referenceTest, paintedTest, 6, 30);
+        CompareImages(referenceTest, paintedTest, 6, 30, 3);
     }
 
     // returns the average badness per pixel of a painted image compared to a reference image
     // reference image = the image that the painted image gets compared to,
     // search radius = how many pixels away will the comparer check for simmilar colours
     // colour discount = reduces the badness of simmilar colours
-    int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount)
+    // every n pixels = only compare every n pixels, increases speed by n^2 but reduces accuracy
+    int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount, int everyNPixels)
     { 
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
@@ -30,9 +31,11 @@ public class ImageComparer : MonoBehaviour
             return -1;
         }
 
+        // convert the images to imageMagick images
         MagickImage reference = ImageConverter.ConvertToMagickImage(referenceInput);
         MagickImage painted = ImageConverter.ConvertToMagickImage(paintedInput);
 
+        // get the pixels of the images to comapre them
         IPixelCollection<byte> referencePixels = reference.GetPixels();
         IPixelCollection<byte> paintedPixels = painted.GetPixels();
 
@@ -40,9 +43,9 @@ public class ImageComparer : MonoBehaviour
         var badnessPixels = badnessMap.GetPixels();
 
         long totalBadness = 0;
-        for (int y = 0; y < reference.Height; y ++)
+        for (int y = 0; y < reference.Height; y += everyNPixels)
         {
-            for (int x = 0; x < reference.Width; x ++)
+            for (int x = 0; x < reference.Width; x += everyNPixels)
             {
                 // compare a pixel in the reference image to nearby pixels in the painted image
                 // four bytes per pixel (rgba)
@@ -112,7 +115,7 @@ public class ImageComparer : MonoBehaviour
         badnessMap.Write("Assets/Textures/badnessMap.png", MagickFormat.Png);
 
         // normalize badness per pixel
-        int averageBadness = (int)(totalBadness / (reference.Width * reference.Height));
+        int averageBadness = (int)(totalBadness / (reference.Width * reference.Height) * Math.Pow(everyNPixels, 2));
 
         // use whatever normalized cross correlation is to compare the images
         double crossCorrelation = reference.Compare(painted, ErrorMetric.NormalizedCrossCorrelation);
