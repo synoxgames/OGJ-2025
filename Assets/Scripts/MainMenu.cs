@@ -8,7 +8,6 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject settingsWindow;
     public Image blackScreen; // Reference to the black screen image
     public float fadeDuration = 1f; // Duration of the fade effect
 
@@ -21,7 +20,6 @@ public class MainMenu : MonoBehaviour
             if (found != null)
             {
                 blackScreen = found.GetComponent<Image>();
-                Debug.Log("Found blackScreen via Find().");
             }
             else
             {
@@ -31,7 +29,6 @@ public class MainMenu : MonoBehaviour
     }
     public void startGame()
     {
-        Debug.Log("Start game clicked");
         // Start fade out coroutine
         StartCoroutine(FadeOutAndLoadScene("MuseumExterior"));
     }
