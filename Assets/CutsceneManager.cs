@@ -33,7 +33,6 @@ public class CutsceneManager : MonoBehaviour
     public bool debug = false;
     private bool isTyping = false;
     private bool textFullyDisplayed = false;
-    private string currentText = "";
     private Coroutine typingCoroutine;
     public bool userClickedToContinue = false;
     void Start()
@@ -328,6 +327,6 @@ public class CutsceneManager : MonoBehaviour
         blackScreen.color = new Color(0, 0, 0, 1);
 
         //End of the cutscene move to the next scene.
-        SceneManager.LoadScene("Drawing_Test");
+        SceneManager.LoadScene("MuseumInterior");
     }
 }
