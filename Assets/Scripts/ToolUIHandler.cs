@@ -8,7 +8,8 @@ public class ToolUIHandler : MonoBehaviour
     public Text toolName;
     public Image currentColourImage;
 
-    public void ChangeTool(DrawingTool tool) {
+    public void ChangeTool(DrawingTool tool)
+    {
         toolName.text = tool.toolName;
         currentColourImage.color = tool.paintColour;
     }

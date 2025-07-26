@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceTest: {fileID: 2800000, guid: 5901a6aade3aeda46ad4dcd73fb60b8a, type: 3}
-  paintedTest: {fileID: 2800000, guid: 9a8bf719f483380448c4c6af348a1bb7, type: 3}
+  paintedTest: {fileID: 2800000, guid: 89f837447bf22c04dab809dfd7c7fdde, type: 3}
 --- !u!4 &1631086424
 Transform:
   m_ObjectHideFlags: 0

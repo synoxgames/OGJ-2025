@@ -47,14 +47,16 @@ public class PaintBrush : DrawingTool
         if (i < 0) i = 0;
         if (j < 0) j = 0;
 
-        if (iMax >= canvas.canvasSizeX) iMax = canvas.canvasSizeX - 1;
-        if (jMax >= canvas.canvasSizeY) jMax = canvas.canvasSizeY - 1;
+        if (iMax >= canvas.canvasResolutionX) iMax = canvas.canvasResolutionX - 1;
+        if (jMax >= canvas.canvasResolutionY) jMax = canvas.canvasResolutionY - 1;
 
         for (int x = i; x <= iMax; x++) {
             for (int y = j; y <= jMax; y++) {
 
                 if ((x - xPix)  * (x - xPix) + (y - yPix) * (y - yPix) <= brushSize * brushSize) {
-                    canvas.colourMap[x * canvas.canvasSizeY + y] = paintColour;
+
+                    int pixelIndex = canvas.GetPixelIndexAt(x, y);
+                    canvas.canvasPixels[pixelIndex] = paintColour;
                 }
 
             }
