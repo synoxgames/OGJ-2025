@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fill : DrawingTool {
+public class Fill : DrawingTool
+{
+    bool[,] visitedPixels;
 
     struct Pixel
     {
@@ -24,66 +27,78 @@ public class Fill : DrawingTool {
     {
         // the pixel to start filling from
         Pixel initialPixel = new Pixel(canvaxPixelX, canvaxPixelY);
+        // find all adjacent pixels with this colour
+        Color floodColour = canvas.canvasPixels[canvas.GetPixelIndexAt(canvaxPixelX, canvaxPixelY)];
 
-        Debug.Log(canvaxPixelX + ", " + canvaxPixelY);
+        visitedPixels = new bool[canvas.canvasResolutionX, canvas.canvasResolutionY];
+        Queue<Pixel> pixelsToBeFilled = new Queue<Pixel>();
 
-        // find the colour of the pixel to start filling from
-        Color colourToFill = canvas.canvasPixels[canvas.GetPixelIndexAt(canvaxPixelX, canvaxPixelY)];
+        pixelsToBeFilled.Enqueue(initialPixel);
 
-        // a queue of pixels that are to be filled
-        Queue<Pixel> pixelsToFill = new Queue<Pixel>();
-        pixelsToFill.Enqueue(initialPixel);
-
-        while (pixelsToFill.Count > 0)
+        while (pixelsToBeFilled.Count > 0)
         {
-            Pixel current = pixelsToFill.Dequeue();
-            
-            // Going right of the pixel
-            for (int i = current.x; i < canvas.canvasResolutionX; i++)
+            Pixel current = pixelsToBeFilled.Dequeue();
+            FloodFill(current, floodColour, pixelsToBeFilled);
+        }
+
+        // get all the connected pixels of the same colour
+        FloodFill(initialPixel, floodColour, pixelsToBeFilled);
+
+        // paint the pixels
+        for (int y = 0; y < canvas.canvasResolutionY; y ++)
+        {
+            for (int x = 0; x < canvas.canvasResolutionX; x ++)
             {
-                Color fillingColour = canvas.canvasPixels[canvas.GetPixelIndexAt(current.x + 1, current.y)];
-
-                if (fillingColour != colourToFill || fillingColour == paintColour) break;
-                canvas.canvasPixels[canvas.GetPixelIndexAt(current.x + 1, current.y)] = paintColour;
-
-                // Checking pixel above
-                if (current.y + 1 < canvas.canvasResolutionY)
+                if (visitedPixels[x,y] == true)
                 {
-                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX + canvas.canvasResolutionX];
-                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y + 1));
+                    canvas.canvasPixels[canvas.GetPixelIndexAt(x, y)] = paintColour;
                 }
-
-                // Checking pixel below
-                if (current.y - 1 >= 0)
-                {
-                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX - canvas.canvasResolutionX];
-                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y - 1));
-                }
-            }
-
-            // Going left of the pixel
-            for (int i = current.x - 1; i >= 0; i--)
-            {
-                Color fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX];
-
-                if (fillingColour != colourToFill || fillingColour == paintColour) break;
-                canvas.canvasPixels[i + current.y * canvas.canvasResolutionX] = paintColour;
-
-                // Checking pixel above
-                if (current.y + 1 < canvas.canvasResolutionY)
-                {
-                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX + canvas.canvasResolutionX];
-                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y + 1));
-                }
-
-                // Checking pixel below
-                if (current.y - 1 >= 0)
-                {
-                    fillingColour = canvas.canvasPixels[i + current.y * canvas.canvasResolutionX - canvas.canvasResolutionX];
-                    if (fillingColour == colourToFill && fillingColour != paintColour) pixelsToFill.Enqueue(new Pixel(i, current.y - 1));
-                }
-
             }
         }
+    }
+
+    // its recursion wednesday baby
+    private void FloodFill(Pixel pixel, Color floodColour, Queue<Pixel> pixelsToBeFilled)
+    {
+        // the pixel is already to be filled
+        if (visitedPixels[pixel.x, pixel.y] == true)
+        {
+            return;
+        }
+
+        // the pixel is a different colour
+        if (canvas.canvasPixels[canvas.GetPixelIndexAt(pixel.x, pixel.y)] != floodColour)
+        {
+            return;
+        }
+
+        visitedPixels[pixel.x, pixel.y] = true;
+
+        Pixel up = pixel;
+        Pixel down = pixel;
+        Pixel left = pixel;
+        Pixel right = pixel;
+
+        if (up.y + 1 < canvas.canvasResolutionY)
+        {
+            up.y += 1;
+        }
+        if (down.y - 1 >= 0)
+        {
+            down.y -= 1;
+        }
+        if (right.x + 1 < canvas.canvasResolutionX)
+        {
+            right.x += 1;
+        }
+        if (left.x - 1 >= 0)
+        {
+            left.x -= 1;
+        }
+
+        pixelsToBeFilled.Enqueue(up);
+        pixelsToBeFilled.Enqueue(left);
+        pixelsToBeFilled.Enqueue(right);
+        pixelsToBeFilled.Enqueue(down);
     }
 }
