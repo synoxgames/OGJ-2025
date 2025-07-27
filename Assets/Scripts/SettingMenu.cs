@@ -18,6 +18,8 @@ public class SettingMenu : MonoBehaviour
     [Header("Sprites")]
     [SerializeField] private Sprite muteSprite;
     [SerializeField] private Sprite unmuteSprite;
+    [SerializeField] private Sprite selectedSprite;
+    [SerializeField] private Sprite unselectedSprite;
 
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
@@ -118,5 +120,10 @@ public class SettingMenu : MonoBehaviour
             slider.onValueChanged.AddListener(SetMusicVolume);
         else if (slider == sfxSlider)
             slider.onValueChanged.AddListener(SetSFXVolume);
+    }
+
+    public void SelectEasy()
+    { 
+        
     }
 }
