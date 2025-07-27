@@ -16,14 +16,16 @@ using UnityEngine;
 
 public static class CoinManager
 {
-    private static int coinCount = 0; // Intial coin count set to 100
+    private static int coinCount = 0; // Intial coin count
 
+    // change the number of coins the player has
     public static void ChangeCoins(int change)
     {
         coinCount += change;
         Debug.Log("Coins added: " + change + ". Total coins: " + coinCount);
     }
 
+    // returns how many coins the player has
     public static int GetCoinCount()
     {
         Debug.Log("player has: " + coinCount + "coins");

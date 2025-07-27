@@ -18,34 +18,43 @@ public abstract class DrawingTool : MonoBehaviour
 
     protected DrawableCanvas canvas = DrawableCanvas.instance;
 
+    // on load, check if this tool is unlocked
     private void Awake()
     {
         costIcon.SetActive(true);
         costText.text = cost.ToString();
 
-        if (ToolManager.IsUnlocked(toolName))
+        if (ToolColourManager.IsUnlocked(toolName))
         {
-            unlocked = true;
-            costIcon.SetActive(false);
+            Unlock();
         }
     }
 
+    // unlock this tool
+    public virtual void Unlock()
+    {
+        unlocked = true;
+        costIcon.SetActive(false);
+        ToolColourManager.UnlockTool(toolName);
+    }
+
+    // buy this tool
     public virtual void Buy()
     {
         if (CoinManager.GetCoinCount() >= cost)
         {
             CoinManager.ChangeCoins(-cost);
-            unlocked = true;
-            costIcon.SetActive(false);
-            ToolManager.UnlockTool(toolName);
+            Unlock();
         }
     }
 
+    // check if this tool is unlocked or not
     public virtual bool IsUnlocked()
     {
         return unlocked;
     }
 
+    // set teh colour of this tool
     public virtual void SetColour(string hex)
     {
         ColorUtility.TryParseHtmlString(hex, out paintColour);
