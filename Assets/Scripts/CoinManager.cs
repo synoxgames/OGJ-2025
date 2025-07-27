@@ -16,7 +16,7 @@ using UnityEngine;
 
 public static class CoinManager
 {
-    private static int coinCount = 100; // Intial coin count set to 100
+    private static int coinCount = 0; // Intial coin count set to 100
 
     public static void ChangeCoins(int change)
     {
