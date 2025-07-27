@@ -109,7 +109,7 @@ public class ComparisonManager : MonoBehaviour
         while (currentAccuracy < accuracy)
         {
             currentAccuracy = Mathf.Min(((currentAccuracy * 1.1f) + 1f), accuracy);
-            accuracyText.text = "Accuracy: " + currentAccuracy + "%";
+            accuracyText.text = $"Accuracy: {currentAccuracy.ToString("0.00")}%";
             yield return new WaitForSeconds(0.1f);
         }
     }
