@@ -80,9 +80,9 @@ public class DrawableCanvas : MonoBehaviour
     }
 
     // called by the colours in the colour picker when they are selected
-    public void ChangeActiveToolColour(string hex)
+    public void ChangeActiveToolColour(string colourHex)
     {
-        selectedTool.SetColour(hex);
+        selectedTool.SetColour(colourHex);
         uiHandler.ChangeTool(selectedTool);
     }
 
