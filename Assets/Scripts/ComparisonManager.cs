@@ -132,21 +132,23 @@ public class ComparisonManager : MonoBehaviour
         return Mathf.RoundToInt(accuracy * 100f);
     }
 
-    IEnumerator PrintMoneyEarned(int money)
+    IEnumerator PrintMoneyEarned(int badnessScore)
     {
+        float accuracy = GetAccuracyPercentage(badnessScore);
+        moneyEarned = Mathf.RoundToInt(accuracy * selectedArtRef.moneyMultiplier);
         // This method will be used to display the money earned from the comparison
         // it will start from 0 up to the given money value
         moneyText.gameObject.SetActive(true);
         moneyText.text = "Money Earned: $0"; // Start with 0 money earned
         int currentMoney = 0;
-        while (currentMoney < money)
+        while (currentMoney < moneyEarned)
         {
-            currentMoney = Mathf.Min((int)(currentMoney * 1.1) + 1, money);
+            currentMoney = Mathf.Min((int)(currentMoney * 1.1) + 1, moneyEarned);
             moneyText.text = "Money Earned: $" + currentMoney;
             yield return new WaitForSeconds(0.1f);
         }
-
+        Debug.Log("Money earned: " + moneyEarned);
         // add coins to the users bank account
-        CoinManager.ChangeCoins(currentMoney);
+        CoinManager.ChangeCoins(moneyEarned);
     }
 }
