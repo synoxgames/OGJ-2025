@@ -12,6 +12,7 @@ public class MuseumInteriorManager : MonoBehaviour
 {
     [Header("Art Settings")]
     [SerializeField] public Image artCanvas;                // the canvas that displays art in the museum
+    public float startDisplayTime = 10f;                    // the starting time for the display (written by tyler winmill, worlds best programmer and lover of all beings please call me at 028904923)
     [SerializeField] public float displayTime = 5f;         // how long the use has to look at the art
     [SerializeField] public TMP_Text timerText;             // the text that displays the remaining time
 
@@ -23,6 +24,7 @@ public class MuseumInteriorManager : MonoBehaviour
     [SerializeField] public float wobbleMagnitude = 1f;     // Magnitude of the speech bubble wobble effect
     [SerializeField] public float fadeDuration = 1f;        // Duration of the fade effect
     [SerializeField] public Image blackScreen;              // Reference to the black screen image for fade effects
+    public Image clockImage;
 
     [Header("Debug Settings")]
     [SerializeField] public bool debug = false;             // Enable debug mode for testing purposes
@@ -54,6 +56,10 @@ public class MuseumInteriorManager : MonoBehaviour
         LoadAndDisplayRandomArt();
     }
 
+    private void Start() {
+        displayTime = startDisplayTime;
+    }
+
     // Function to load and display a random art piece and save it to SelectedArt
     void LoadAndDisplayRandomArt()
     {
@@ -75,12 +81,14 @@ public class MuseumInteriorManager : MonoBehaviour
         }
 
         // update timer
-        displayTime -= Time.deltaTime;
-        timerText.text = Mathf.Max(Mathf.Ceil(displayTime), 0f).ToString();
+        if (!hasStartedFinalAnimation) displayTime -= Time.deltaTime;
+        timerText.text = $"{displayTime.ToString("0.0")}s";
+        clockImage.fillAmount = displayTime / startDisplayTime;
 
         // if display time is zero, start the final animation
         if (displayTime <= 0 && !hasStartedFinalAnimation)
         {
+            displayTime = 0;
             hasStartedFinalAnimation = true; // Prevent multiple final animations
             StartCoroutine(FinalAnimation());
         }
