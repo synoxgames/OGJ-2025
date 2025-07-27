@@ -6923,7 +6923,7 @@ MonoBehaviour:
   paintColour: {r: 0, g: 0, b: 0, a: 0}
   useInterpolation: 1
   unlocked: 0
-  cost: 0
+  cost: 150
   costText: {fileID: 1799022854}
   costIcon: {fileID: 184540718}
   colourSelected: {fileID: 305359041}
