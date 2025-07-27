@@ -68,6 +68,13 @@ public class DrawableCanvas : MonoBehaviour
     // sets the currently selected tool to whatever was selected
     public void ChangeTool(DrawingTool tool)
     {
+        // if the tool is locked try and buy it
+        if (tool.IsUnlocked() == false)
+        {
+            tool.Buy();
+            return;
+        }
+
         selectedTool = tool;
         uiHandler.ChangeTool(tool);
     }

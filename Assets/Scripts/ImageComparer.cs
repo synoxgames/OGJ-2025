@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-//using ImageMagick;
 
 public static class ImageComparer
 {

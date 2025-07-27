@@ -14,30 +14,19 @@ using UnityEngine;
 */
 
 
-public class CoinManager : MonoBehaviour
+public static class CoinManager
 {
-    public static CoinManager Instance { get; private set; }
-    private int coinCount = 100; // Intial coin count set to 100
+    private static int coinCount = 100; // Intial coin count set to 100
 
-    private void Awake() 
+    public static void ChangeCoins(int change)
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Ensure this instance persists across scenes
-        }
-        else
-        {
-            Destroy(gameObject); // Ensure only one instance exists
-        }
+        coinCount += change;
+        Debug.Log("Coins added: " + change + ". Total coins: " + coinCount);
     }
-    public void AddCoins(int amount)
+
+    public static int GetCoinCount()
     {
-        coinCount += amount;
-        Debug.Log($"Coins added: {amount}. Total coins: {coinCount}");
-    }
-    public int GetCoinCount()
-    {
+        Debug.Log("player has: " + coinCount + "coins");
         return coinCount;
     }
 }

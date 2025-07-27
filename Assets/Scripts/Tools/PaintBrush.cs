@@ -9,19 +9,22 @@ public class PaintBrush : DrawingTool
     public Text pixelText;
     public Image colourSelected;
 
-    private void Start() {
+    private void Start()
+    {
         UpdateUI();
         canvas = DrawableCanvas.instance;
     }
 
-    public void ChangeBrushSize(int dir) {
+    public void ChangeBrushSize(int dir)
+    {
         brushSize += dir;
         brushSize = Mathf.Clamp(brushSize, 1, 100);
         UpdateUI();
     }
 
     // Probably a temporary way to change the brushes size
-    private void Update() {
+    private void Update()
+    {
         if (Input.GetKey(KeyCode.LeftControl)) {
             if (Input.GetKeyDown(KeyCode.Equals)) {
                 ChangeBrushSize(1);
@@ -31,13 +34,15 @@ public class PaintBrush : DrawingTool
         }
     }
 
-    public void UpdateUI() {
+    public void UpdateUI()
+    {
         pixelText.text = $"{brushSize}px";
         colourSelected.color = paintColour;
     }
 
 
-    public override void UseTool(int xPix, int yPix) {
+    public override void UseTool(int xPix, int yPix)
+    {
         int i = xPix - brushSize + 1;
         int j = yPix - brushSize + 1;
 
@@ -63,7 +68,8 @@ public class PaintBrush : DrawingTool
         }
     }
 
-    public override void SetColour(string hex) {
+    public override void SetColour(string hex)
+    {
         ColorUtility.TryParseHtmlString(hex, out paintColour);
         UpdateUI();
     }
