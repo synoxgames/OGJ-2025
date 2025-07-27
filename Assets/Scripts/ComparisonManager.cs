@@ -8,10 +8,11 @@ using UnityEngine.UI;
 public class ComparisonManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] GameObject canvasContainer; // The container that holds reference and drawn images
-    [SerializeField] TMP_Text accuracyText; // The text component to display accuracy
-    [SerializeField] TMP_Text moneyText; // The text component to display money earned
-    [SerializeField] Image backgroundImage; // The reference image component for the black background
+    [SerializeField] GameObject canvasContainer;        // The container that holds reference and drawn images
+    [SerializeField] TMP_Text accuracyText;             // The text component to display accuracy
+    [SerializeField] TMP_Text moneyText;                // The text component to display money earned
+    [SerializeField] Image backgroundImage;             // The reference image component for the black background
+    [SerializeField] GameObject nextButtonContainer;    // The GameObject holding the next button
 
     // the canvases that display the drawn and reference images nest to one another
     private Image referenceCanvas;
@@ -70,6 +71,7 @@ public class ComparisonManager : MonoBehaviour
         // Display the accuracy and money earned
         yield return StartCoroutine(PrintAccuracy(accuracy));
         yield return StartCoroutine(PrintMoneyEarned(moneyEarned));
+        nextButtonContainer.SetActive(true);
     }
 
     IEnumerator DropDownImages()
