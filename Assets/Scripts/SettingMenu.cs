@@ -24,14 +24,14 @@ public class SettingMenu : MonoBehaviour
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Sprite unselectedSprite;
     [Header("Difficulty Settings")]
-    [SerializeField] private SelectedArt selectedArtRef;
+    [SerializeField] public SelectedArt selectedArtRef;
     // Difficulty threshold defaults
     [SerializeField] private float easyUpperBound = 300; // this is the upper bound for the accuracy threshold for easy, higher is easier
     [SerializeField] private float easyLowerBound = 160; // this is the lower bound, lower is harder
-    [SerializeField] private float mediumUpperBound = 200;
+    [SerializeField] private float mediumUpperBound = 110;
     [SerializeField] private float mediumLowerBound = 80;
-    [SerializeField] private float hardUpperBound = 100;
-    [SerializeField] private float hardLowerBound = 40f;
+    [SerializeField] private float hardUpperBound = 90;
+    [SerializeField] private float hardLowerBound = 50f;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
 
@@ -143,6 +143,8 @@ public class SettingMenu : MonoBehaviour
         // Update selected art thresholds
         selectedArtRef.upperBound = easyUpperBound;
         selectedArtRef.lowerBound = easyLowerBound;
+
+        Debug.Log($"Selected easy difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
 
     public void SelectMedium()
@@ -155,6 +157,8 @@ public class SettingMenu : MonoBehaviour
         // Update selected art thresholds
         selectedArtRef.upperBound = mediumUpperBound;
         selectedArtRef.lowerBound = mediumLowerBound;
+
+        Debug.Log($"Selected medium difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
 
     public void SelectHard()
@@ -167,5 +171,7 @@ public class SettingMenu : MonoBehaviour
         // Update selected art thresholds
         selectedArtRef.upperBound = hardUpperBound;
         selectedArtRef.lowerBound = hardLowerBound;
+
+        Debug.Log($"Selected hard difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
 }

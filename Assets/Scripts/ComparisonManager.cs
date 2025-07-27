@@ -18,6 +18,7 @@ public class ComparisonManager : MonoBehaviour
     private Image drawnCanvas;
 
     [Header("Comparison Settings")]
+    [SerializeField] public SelectedArt selectedArtRef;
     [SerializeField] float moneyPerAccuracy = 0.1f; // The amount of money earned per accuracy point
     [SerializeField] float dropDownDuration = 1f; // Duration for the dropdown effect
 
@@ -52,6 +53,7 @@ public class ComparisonManager : MonoBehaviour
 
     public void StartAnimation(int accuracy)
     {
+        Debug.Log("StartAnimation called with accuracy: " + accuracy);
         backgroundImage.gameObject.SetActive(true);
         // This method will be used to start the animation of the images dropping down
         StartCoroutine(FinalAnimation(accuracy));
@@ -92,8 +94,11 @@ public class ComparisonManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator PrintAccuracy(int accuracy)
+    IEnumerator PrintAccuracy(int badnessScore)
     {
+        // Calculate the accuracy percentage based on the badness score
+        accuracy = GetAccuracyPercentage(badnessScore);
+        Debug.Log("Computed accuracy = " + accuracy);
         // This method will be used to display the accuracy of the painted image compared to the reference image
         // it will start from 0 up to the given accuracy value
         accuracyText.gameObject.SetActive(true);
@@ -105,6 +110,24 @@ public class ComparisonManager : MonoBehaviour
             accuracyText.text = "Accuracy: " + currentAccuracy + "%";
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    int GetAccuracyPercentage(int badnessScore)
+    {
+        // Calculate the accuracy percentage based on the selected art's thresholds
+        float upperBound = selectedArtRef.upperBound;
+        float lowerBound = selectedArtRef.lowerBound;
+        Debug.Log($"Badness: {badnessScore}, Lower: {lowerBound}, Upper: {upperBound}");
+
+        if (badnessScore < lowerBound)
+            return 100; // Best possible score
+
+        if (badnessScore > upperBound)
+            return 0; // Worst possible score
+
+        // Calculate percentage within bounds
+        float accuracy = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
+        return Mathf.RoundToInt(accuracy * 100f);
     }
 
     IEnumerator PrintMoneyEarned(int money)

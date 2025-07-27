@@ -593,6 +593,7 @@ MonoBehaviour:
   accuracyText: {fileID: 883259663}
   moneyText: {fileID: 2115261892}
   backgroundImage: {fileID: 886469675}
+  selectedArtRef: {fileID: 11400000, guid: 3b9863ca71a896e45876fe8a602bd056, type: 2}
   moneyPerAccuracy: 0.1
   dropDownDuration: 1
 --- !u!114 &126619231

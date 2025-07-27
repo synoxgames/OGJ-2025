@@ -9,6 +9,7 @@ public class SelectedArt : ScriptableObject
     public float upperBound; // this is the upper bound for the accuracy threshold
     public float lowerBound; // this is the lower bound for the accuracy threshold
 
+    public float moneyMultiplier = 1f; // multiplier for the money earned from this art per accuracy point
     public Sprite GetSprite()
     {
         if (artTexture == null)
