@@ -21,13 +21,13 @@ public class DrawableCanvas : MonoBehaviour
 
     // the positions of the mouse and the coreners of the canvas
     [Header("Drawing Information")]
-    public Transform cursorPosition;           // Where the cursor is on the screen
-    public Transform topLeftCorner;       // These are to help with knowing where the cursor is on screen
-    public Transform bottomRightCorner;   // These are to help with knowing where the cursor is on screen
+    public Transform cursorPosition;        // Where the cursor is on the screen
+    public Transform topLeftCorner;         // These are to help with knowing where the cursor is on screen
+    public Transform bottomRightCorner;     // These are to help with knowing where the cursor is on screen
 
-[Header("Compare Information")]
-    [SerializeField] GameObject compareCanvas; //reference to the CompareScript component 
-    [SerializeField] CompareScript compareScript; //reference to the CompareScript component 
+    [Header("Compare Information")]
+    [SerializeField] ComparisonManager compaisonManager; //reference to the CompareScript component 
+    
     public static DrawableCanvas instance;
 
     [HideInInspector]
@@ -43,7 +43,6 @@ public class DrawableCanvas : MonoBehaviour
     bool toolUsedLastFrame = false;
     // the ui that us used to select tools / colours
     ToolUIHandler uiHandler;
-    ImageComparer imgComparer;
 
     private void Awake()
     {
@@ -57,7 +56,6 @@ public class DrawableCanvas : MonoBehaviour
         mainCamera = Camera.main;
         // get the ui manager
         uiHandler = FindObjectOfType<ToolUIHandler>();
-        imgComparer = FindObjectOfType<ImageComparer>();
     }
 
     private void Start()
@@ -224,14 +222,15 @@ public class DrawableCanvas : MonoBehaviour
         PixelsToCanvas();
     }
 
-    // Sumbit for checking
+    // compare the drawn image to the refernce image
     public void SumbitCanvas()
     {
         PixelsToCanvas();
-        Texture2D rotatedTexture = RotateCanvas(canvasTexture);
-        int badnessScore = imgComparer.CompareGivenImage(rotatedTexture);
-        compareScript.SetDrawnImage(rotatedTexture);
-        compareScript.StartAnimation(badnessScore);
+        Texture2D rotatedCanvasTexture = RotateCanvas(canvasTexture);
+        int badnessScore = ImageComparer.CompareImages(rotatedCanvasTexture, ArtManager.GetArtTexture(), 6, 30, 3);
+        compaisonManager.SetReferenceImage(ArtManager.GetArtTexture());
+        compaisonManager.SetDrawnImage(rotatedCanvasTexture);
+        compaisonManager.StartAnimation(badnessScore);
     }
 
     // Rotate the Texture2D clockwise (Will add more comments soon)
@@ -239,22 +238,20 @@ public class DrawableCanvas : MonoBehaviour
     {
         Color[] originalCanvasPixels = originalTexture.GetPixels();
         Color[] rotatedCanvasPixels = new Color[originalCanvasPixels.Length];
-        int w = originalTexture.width;
-        int h = originalTexture.height;
+        int width = originalTexture.width;
+        int height = originalTexture.height;
 
-        int rotatedIndex, originalIndex;
-
-        for (int y = 0; y < h; ++y)
+        for (int y = 0; y < height; ++y)
         {
-            for (int x = 0; x < w; ++x)
+            for (int x = 0; x < width; ++x)
             {
-                rotatedIndex = (x + 1) * h - y - 1;
-                originalIndex = originalCanvasPixels.Length - 1 - (y * w + x);
+                int rotatedIndex = (x + 1) * height - y - 1;
+                int originalIndex = originalCanvasPixels.Length - 1 - (y * width + x);
                 rotatedCanvasPixels[rotatedIndex] = originalCanvasPixels[originalIndex];
             }
         }
 
-        Texture2D rotatedTexture = new Texture2D(h, w, TextureFormat.RGBA32, false);
+        Texture2D rotatedTexture = new Texture2D(height, width, TextureFormat.RGB24, false);
         rotatedTexture.SetPixels(rotatedCanvasPixels);
         rotatedTexture.Apply();
         return rotatedTexture;

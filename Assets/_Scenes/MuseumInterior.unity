@@ -1099,7 +1099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1654290249}
-  - component: {fileID: 1654290250}
+  - component: {fileID: 1654290251}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1122,7 +1122,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1654290250
+--- !u!114 &1654290251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1131,13 +1131,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654290247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d226359769e244a46b1aead7135b6e79, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd646538c412cf42b48cedb691483aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  artImage: {fileID: 277962459}
+  artCanvas: {fileID: 277962459}
   displayTime: 3
   timerText: {fileID: 1315299532}
-  selectedArtRef: {fileID: 11400000, guid: 3b9863ca71a896e45876fe8a602bd056, type: 2}
   speechBubbleText: {fileID: 1886085821}
   speechBubbleImage: {fileID: 1111280732}
   enlargeDuration: 1

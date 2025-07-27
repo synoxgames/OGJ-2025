@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/_Scenes/MuseumInterior.unity
     guid: aad7db844fb179e47af1c9d3e2ed3db0
   - enabled: 1
-    path: Assets/_Scenes/Drawing_Test.unity
+    path: Assets/_Scenes/PaintingStudio.unity
     guid: cee38742039931545bed815dba6a1559
   - enabled: 1
     path: Assets/_Scenes/Art_Display_Test.unity
