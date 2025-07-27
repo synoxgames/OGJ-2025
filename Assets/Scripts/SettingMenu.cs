@@ -32,6 +32,12 @@ public class SettingMenu : MonoBehaviour
     [SerializeField] private float mediumLowerBound = 80;
     [SerializeField] private float hardUpperBound = 90;
     [SerializeField] private float hardLowerBound = 50f;
+    [SerializeField] private float easyDisplayTime = 5f; // time art is displayed for easy
+    [SerializeField] private float mediumDisplayTime = 4f; 
+    [SerializeField] private float hardDisplayTime = 3f;
+    [SerializeField] private float easyMoneyMultiplier = 0.5f; // multiplier for the money earned from this art per accuracy point
+    [SerializeField] private float mediumMoneyMultiplier = 0.25f;
+    [SerializeField] private float hardMoneyMultiplier = 0.1f;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
 
@@ -144,6 +150,9 @@ public class SettingMenu : MonoBehaviour
         selectedArtRef.upperBound = easyUpperBound;
         selectedArtRef.lowerBound = easyLowerBound;
 
+        selectedArtRef.displayTime = easyDisplayTime;
+        selectedArtRef.moneyMultiplier = easyMoneyMultiplier;
+
         Debug.Log($"Selected easy difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
 
@@ -158,6 +167,9 @@ public class SettingMenu : MonoBehaviour
         selectedArtRef.upperBound = mediumUpperBound;
         selectedArtRef.lowerBound = mediumLowerBound;
 
+        selectedArtRef.displayTime = mediumDisplayTime;
+        selectedArtRef.moneyMultiplier = mediumMoneyMultiplier;
+
         Debug.Log($"Selected medium difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
 
@@ -171,6 +183,9 @@ public class SettingMenu : MonoBehaviour
         // Update selected art thresholds
         selectedArtRef.upperBound = hardUpperBound;
         selectedArtRef.lowerBound = hardLowerBound;
+
+        selectedArtRef.displayTime = hardDisplayTime;
+        selectedArtRef.moneyMultiplier = hardMoneyMultiplier;
 
         Debug.Log($"Selected hard difficulty: Upper = {selectedArtRef.upperBound}, Lower = {selectedArtRef.lowerBound}");
     }
