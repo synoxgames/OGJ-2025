@@ -18,6 +18,7 @@ public class CoinManager : MonoBehaviour
 {
     public static CoinManager Instance { get; private set; }
     private int coinCount = 100; // Intial coin count set to 100
+
     private void Awake() 
     {
         if (Instance == null)

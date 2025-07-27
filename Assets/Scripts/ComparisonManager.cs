@@ -50,14 +50,14 @@ public class ComparisonManager : MonoBehaviour
         drawnCanvas.sprite = drawnSprite;
     }
 
-    public void StartAnimation(int accuracy)
+    public void StartAnimation(float accuracy)
     {
         backgroundImage.gameObject.SetActive(true);
         // This method will be used to start the animation of the images dropping down
         StartCoroutine(FinalAnimation(accuracy));
     }
 
-    IEnumerator FinalAnimation(int accuracy)
+    IEnumerator FinalAnimation(float accuracy)
     {
         // This method will be used to display the final animation of the art piece
         yield return StartCoroutine(DropDownImages());
@@ -92,16 +92,16 @@ public class ComparisonManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator PrintAccuracy(int accuracy)
+    IEnumerator PrintAccuracy(float accuracy)
     {
         // This method will be used to display the accuracy of the painted image compared to the reference image
         // it will start from 0 up to the given accuracy value
         accuracyText.gameObject.SetActive(true);
         accuracyText.text = "Accuracy: 0%"; // Start with 0% accuracy
-        int currentAccuracy = 0;
+        float currentAccuracy = 0f;
         while (currentAccuracy < accuracy)
         {
-            currentAccuracy = Mathf.Min((int)(currentAccuracy * 1.1) + 1, accuracy);
+            currentAccuracy = Mathf.Min(((currentAccuracy * 1.1f) + 1f), accuracy);
             accuracyText.text = "Accuracy: " + currentAccuracy + "%";
             yield return new WaitForSeconds(0.1f);
         }
