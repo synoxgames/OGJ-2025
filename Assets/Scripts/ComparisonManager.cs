@@ -128,25 +128,30 @@ public class ComparisonManager : MonoBehaviour
             return 0; // Worst possible score
 
         // Calculate percentage within bounds
-        float accuracy = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
-        return Mathf.RoundToInt(accuracy * 100f);
+        float percent = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
+        percent = Mathf.Clamp01(percent); // just in case of bounds
+        accuracy = Mathf.RoundToInt(percent * 100f);
+        return accuracy;
     }
 
-    IEnumerator PrintMoneyEarned(int money)
+    IEnumerator PrintMoneyEarned(int badnessScore)
     {
+        moneyEarned = Mathf.RoundToInt(accuracy * selectedArtRef.moneyMultiplier);
+        if (accuracy == 0)
+            moneyEarned = 1;
         // This method will be used to display the money earned from the comparison
         // it will start from 0 up to the given money value
         moneyText.gameObject.SetActive(true);
         moneyText.text = "Money Earned: $0"; // Start with 0 money earned
         int currentMoney = 0;
-        while (currentMoney < money)
+        while (currentMoney < moneyEarned)
         {
-            currentMoney = Mathf.Min((int)(currentMoney * 1.1) + 1, money);
+            currentMoney = Mathf.Min((int)(currentMoney * 1.1) + 1, moneyEarned);
             moneyText.text = "Money Earned: $" + currentMoney;
             yield return new WaitForSeconds(0.1f);
         }
-
+        Debug.Log("Money earned: " + moneyEarned);
         // add coins to the users bank account
-        CoinManager.ChangeCoins(currentMoney);
+        CoinManager.ChangeCoins(moneyEarned);
     }
 }
