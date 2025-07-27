@@ -28,7 +28,6 @@ public static class CoinManager
     // returns how many coins the player has
     public static int GetCoinCount()
     {
-        Debug.Log("player has: " + coinCount + "coins");
         return coinCount;
     }
 }
