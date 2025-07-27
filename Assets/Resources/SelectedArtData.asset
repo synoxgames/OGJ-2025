@@ -16,4 +16,5 @@ MonoBehaviour:
   artName: 
   upperBound: 200
   lowerBound: 80
+  displayTime: 5
   moneyMultiplier: 1

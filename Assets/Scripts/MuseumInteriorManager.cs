@@ -12,7 +12,7 @@ public class MuseumInteriorManager : MonoBehaviour
 {
     [Header("Art Settings")]
     [SerializeField] public Image artCanvas;                // the canvas that displays art in the museum
-    public float startDisplayTime = 10f;                    // the starting time for the display (written by tyler winmill, worlds best programmer and lover of all beings please call me at 028904923)
+    [SerializeField] public float startDisplayTime = 10f;   // the starting time for the display (written by tyler winmill, worlds best programmer and lover of all beings please call me at 028904923)
     [SerializeField] public float displayTime = 5f;         // how long the use has to look at the art
     [SerializeField] public TMP_Text timerText;             // the text that displays the remaining time
 
@@ -24,7 +24,12 @@ public class MuseumInteriorManager : MonoBehaviour
     [SerializeField] public float wobbleMagnitude = 1f;     // Magnitude of the speech bubble wobble effect
     [SerializeField] public float fadeDuration = 1f;        // Duration of the fade effect
     [SerializeField] public Image blackScreen;              // Reference to the black screen image for fade effects
-    public Image clockImage;
+    [SerializeField] public Image clockImage;               // The clock image, used to change the fill amount
+
+    [Header("Other")]
+    public AudioSource soundFXSource;
+    public AudioClip ringingSound;
+    [SerializeField] public SelectedArt selectedArtRef;
 
     [Header("Debug Settings")]
     [SerializeField] public bool debug = false;             // Enable debug mode for testing purposes
@@ -57,6 +62,7 @@ public class MuseumInteriorManager : MonoBehaviour
     }
 
     private void Start() {
+        startDisplayTime = selectedArtRef.displayTime;
         displayTime = startDisplayTime;
     }
 
@@ -108,6 +114,9 @@ public class MuseumInteriorManager : MonoBehaviour
     {
         // speech bubble starts with a width of 0, then enlarges to full size over enlargeDuration
         float elapsedTime = 0f;
+        soundFXSource.loop = false;
+        soundFXSource.Stop();
+        soundFXSource.PlayOneShot(ringingSound);
 
         // Phase 1: Enlarge the speech bubble
         while (elapsedTime < enlargeDuration)
