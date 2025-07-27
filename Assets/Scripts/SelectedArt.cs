@@ -6,6 +6,9 @@ public class SelectedArt : ScriptableObject
     public Texture2D artTexture;
     public string artName;
 
+    public float upperBound; // this is the upper bound for the accuracy threshold
+    public float lowerBound; // this is the lower bound for the accuracy threshold
+
     public Sprite GetSprite()
     {
         if (artTexture == null)

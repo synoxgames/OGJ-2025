@@ -11,16 +11,27 @@ public class SettingMenu : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
-    [Header("Mute Buttons")]
+    [Header("Buttons")]
     [SerializeField] private Button toggleMusicButton;
     [SerializeField] private Button toggleSFXButton;
+    [SerializeField] private Button easyButton;
+    [SerializeField] private Button mediumButton;
+    [SerializeField] private Button hardButton;
 
     [Header("Sprites")]
     [SerializeField] private Sprite muteSprite;
     [SerializeField] private Sprite unmuteSprite;
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Sprite unselectedSprite;
-
+    [Header("Difficulty Settings")]
+    [SerializeField] private SelectedArt selectedArtRef;
+    // Difficulty threshold defaults
+    [SerializeField] private float easyUpperBound = 300; // this is the upper bound for the accuracy threshold for easy, higher is easier
+    [SerializeField] private float easyLowerBound = 160; // this is the lower bound, lower is harder
+    [SerializeField] private float mediumUpperBound = 200;
+    [SerializeField] private float mediumLowerBound = 80;
+    [SerializeField] private float hardUpperBound = 100;
+    [SerializeField] private float hardLowerBound = 40f;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
 
@@ -123,7 +134,38 @@ public class SettingMenu : MonoBehaviour
     }
 
     public void SelectEasy()
-    { 
-        
+    {
+        // Set button states
+        easyButton.GetComponent<Image>().sprite = selectedSprite;
+        mediumButton.GetComponent<Image>().sprite = unselectedSprite;
+        hardButton.GetComponent<Image>().sprite = unselectedSprite;
+
+        // Update selected art thresholds
+        selectedArtRef.upperBound = easyUpperBound;
+        selectedArtRef.lowerBound = easyLowerBound;
+    }
+
+    public void SelectMedium()
+    {
+        // Set button states
+        easyButton.GetComponent<Image>().sprite = unselectedSprite;
+        mediumButton.GetComponent<Image>().sprite = selectedSprite;
+        hardButton.GetComponent<Image>().sprite = unselectedSprite;
+
+        // Update selected art thresholds
+        selectedArtRef.upperBound = mediumUpperBound;
+        selectedArtRef.lowerBound = mediumLowerBound;
+    }
+
+    public void SelectHard()
+    {
+        // Set button states
+        easyButton.GetComponent<Image>().sprite = unselectedSprite;
+        mediumButton.GetComponent<Image>().sprite = unselectedSprite;
+        hardButton.GetComponent<Image>().sprite = selectedSprite;
+
+        // Update selected art thresholds
+        selectedArtRef.upperBound = hardUpperBound;
+        selectedArtRef.lowerBound = hardLowerBound;
     }
 }
