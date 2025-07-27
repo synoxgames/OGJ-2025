@@ -1335,7 +1335,7 @@ MonoBehaviour:
   wobbleMagnitude: 1
   fadeDuration: 1
   blackScreen: {fileID: 188478725}
-  clockImage: {fileID: 0}
+  clockImage: {fileID: 478048612}
   debug: 1
 --- !u!1 &1797616500
 GameObject:
