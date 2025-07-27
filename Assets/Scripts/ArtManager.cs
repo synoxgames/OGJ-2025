@@ -10,7 +10,7 @@ using UnityEngine;
 
 public static class ArtManager
 {
-    static Texture2D[] artTextures; // the art
+    public static Texture2D[] artTextures; // the art
     public static int selectedArtIndex = 0;    // the index of the currently selected pice of art        
     static int[] artDifficulty;     // how hard each pice of art is to copy
 

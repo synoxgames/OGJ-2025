@@ -227,7 +227,7 @@ public class DrawableCanvas : MonoBehaviour
     {
         PixelsToCanvas();
         Texture2D rotatedCanvasTexture = RotateCanvas(canvasTexture);
-        int badnessScore = ImageComparer.CompareImages(rotatedCanvasTexture, ArtManager.GetArtTexture(), 6, 30, 3);
+        int badnessScore = ImageComparer.CompareImages(ArtManager.GetArtTexture(), rotatedCanvasTexture, 6, 30, 3);
         compaisonManager.SetReferenceImage(ArtManager.GetArtTexture());
         compaisonManager.SetDrawnImage(rotatedCanvasTexture);
         compaisonManager.StartAnimation(badnessScore);
