@@ -17,6 +17,7 @@ public class CutsceneManager : MonoBehaviour
     public Image walkieTalkieImage;
     public Image textBubbleImage;
     public TextMeshProUGUI textBubbleText;
+    public Button skipButton;
 
     [Header("Cutscene Settings")]
     public float fadeDuration = 2f; // duration for fade in/out
@@ -328,5 +329,13 @@ public class CutsceneManager : MonoBehaviour
 
         //End of the cutscene move to the next scene.
         SceneManager.LoadScene("MuseumInterior");
+    }
+    
+    public void SkipCutscene()
+    {
+        if (debug) Debug.Log("Cutscene skipped by user.");
+        // If the cutscene is skipped, we can immediately fade out and load the next scene
+        //StopAllCoroutines(); // Stop any ongoing coroutines
+        StartCoroutine(FadeOut());
     }
 }
