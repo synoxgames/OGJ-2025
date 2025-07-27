@@ -4,11 +4,12 @@ using UnityEngine;
 public class SelectedArt : ScriptableObject
 {
     public Texture2D artTexture;
-    public string artName;
+    [SerializeField] public string artName;
 
-    public float upperBound; // this is the upper bound for the accuracy threshold
-    public float lowerBound; // this is the lower bound for the accuracy threshold
+    [SerializeField] public float upperBound; // this is the upper bound for the accuracy threshold
+    [SerializeField] public float lowerBound; // this is the lower bound for the accuracy threshold
 
+    public float moneyMultiplier = 1f; // multiplier for the money earned from this art per accuracy point
     public Sprite GetSprite()
     {
         if (artTexture == null)

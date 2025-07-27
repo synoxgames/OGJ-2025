@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   artCanvas: {fileID: 277962459}
-  displayTime: 3
+  displayTime: 10
   timerText: {fileID: 1315299532}
   speechBubbleText: {fileID: 1886085821}
   speechBubbleImage: {fileID: 1111280732}

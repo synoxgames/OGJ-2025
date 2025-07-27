@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DrawableCanvas : MonoBehaviour
 {
@@ -255,5 +256,10 @@ public class DrawableCanvas : MonoBehaviour
         rotatedTexture.SetPixels(rotatedCanvasPixels);
         rotatedTexture.Apply();
         return rotatedTexture;
+    }
+
+    // Just used to change the scene
+    public void ChangeScene(int buildIndex) {
+        SceneManager.LoadScene(buildIndex);
     }
 }

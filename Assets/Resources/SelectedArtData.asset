@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76ee96315dba9a4c966c1823f9cdec9, type: 3}
   m_Name: SelectedArtData
   m_EditorClassIdentifier: 
-  selectedArt: {fileID: 0}
+  artTexture: {fileID: 0}
+  artName: 
+  upperBound: 200
+  lowerBound: 80
+  moneyMultiplier: 1

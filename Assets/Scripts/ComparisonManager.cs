@@ -8,16 +8,18 @@ using UnityEngine.UI;
 public class ComparisonManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] GameObject canvasContainer; // The container that holds reference and drawn images
-    [SerializeField] TMP_Text accuracyText; // The text component to display accuracy
-    [SerializeField] TMP_Text moneyText; // The text component to display money earned
-    [SerializeField] Image backgroundImage; // The reference image component for the black background
+    [SerializeField] GameObject canvasContainer;        // The container that holds reference and drawn images
+    [SerializeField] TMP_Text accuracyText;             // The text component to display accuracy
+    [SerializeField] TMP_Text moneyText;                // The text component to display money earned
+    [SerializeField] Image backgroundImage;             // The reference image component for the black background
+    [SerializeField] GameObject nextButtonContainer;    // The GameObject holding the next button
 
     // the canvases that display the drawn and reference images nest to one another
     private Image referenceCanvas;
     private Image drawnCanvas;
 
     [Header("Comparison Settings")]
+    [SerializeField] public SelectedArt selectedArtRef;
     [SerializeField] float moneyPerAccuracy = 0.1f; // The amount of money earned per accuracy point
     [SerializeField] float dropDownDuration = 1f; // Duration for the dropdown effect
 
@@ -52,6 +54,7 @@ public class ComparisonManager : MonoBehaviour
 
     public void StartAnimation(float accuracy)
     {
+        Debug.Log("StartAnimation called with accuracy: " + accuracy);
         backgroundImage.gameObject.SetActive(true);
         // This method will be used to start the animation of the images dropping down
         StartCoroutine(FinalAnimation(accuracy));
@@ -68,6 +71,7 @@ public class ComparisonManager : MonoBehaviour
         // Display the accuracy and money earned
         yield return StartCoroutine(PrintAccuracy(accuracy));
         yield return StartCoroutine(PrintMoneyEarned(moneyEarned));
+        nextButtonContainer.SetActive(true);
     }
 
     IEnumerator DropDownImages()
@@ -92,8 +96,15 @@ public class ComparisonManager : MonoBehaviour
         yield return null;
     }
 
+<<<<<<< HEAD
     IEnumerator PrintAccuracy(float accuracy)
+=======
+    IEnumerator PrintAccuracy(int badnessScore)
+>>>>>>> 9e80b856dc7bc7ce583e941369986808730cb7b2
     {
+        // Calculate the accuracy percentage based on the badness score
+        accuracy = GetAccuracyPercentage(badnessScore);
+        Debug.Log("Computed accuracy = " + accuracy);
         // This method will be used to display the accuracy of the painted image compared to the reference image
         // it will start from 0 up to the given accuracy value
         accuracyText.gameObject.SetActive(true);
@@ -105,6 +116,24 @@ public class ComparisonManager : MonoBehaviour
             accuracyText.text = "Accuracy: " + currentAccuracy + "%";
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    int GetAccuracyPercentage(int badnessScore)
+    {
+        // Calculate the accuracy percentage based on the selected art's thresholds
+        float upperBound = selectedArtRef.upperBound;
+        float lowerBound = selectedArtRef.lowerBound;
+        Debug.Log($"Badness: {badnessScore}, Lower: {lowerBound}, Upper: {upperBound}");
+
+        if (badnessScore < lowerBound)
+            return 100; // Best possible score
+
+        if (badnessScore > upperBound)
+            return 0; // Worst possible score
+
+        // Calculate percentage within bounds
+        float accuracy = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
+        return Mathf.RoundToInt(accuracy * 100f);
     }
 
     IEnumerator PrintMoneyEarned(int money)
