@@ -99,7 +99,7 @@ public class DrawableCanvas : MonoBehaviour
         canvasPixels = new Color[canvasResolutionX * canvasResolutionY];
 
         // create the texture that will be displayed on the canvas
-        canvasTexture = new Texture2D(canvasResolutionX, canvasResolutionY, TextureFormat.RGBA32, false);
+        canvasTexture = new Texture2D(canvasResolutionX, canvasResolutionY, TextureFormat.RGB24, false);
         canvasTexture.filterMode = FilterMode.Point;
 
         // clear the canvas
@@ -228,6 +228,7 @@ public class DrawableCanvas : MonoBehaviour
         PixelsToCanvas();
         Texture2D rotatedCanvasTexture = RotateCanvas(canvasTexture);
         int badnessScore = ImageComparer.CompareImages(rotatedCanvasTexture, ArtManager.GetArtTexture(), 6, 30, 3);
+        Debug.Log(badnessScore);
         compaisonManager.SetReferenceImage(ArtManager.GetArtTexture());
         compaisonManager.SetDrawnImage(rotatedCanvasTexture);
         compaisonManager.StartAnimation(badnessScore);

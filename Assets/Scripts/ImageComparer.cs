@@ -13,9 +13,7 @@ public static class ImageComparer
     {
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
-            Debug.LogError("reference and painting were not the same size, one of them probably wasn't imported correctly");
-            Debug.LogError("refernce: " + referenceInput.width + ", " + referenceInput.height + " painted: " + paintedInput.width + ", " + paintedInput.height);
-            return -1;
+            referenceInput.Reinitialize(paintedInput.width, paintedInput.height);
         }
 
         // convert the images to imageMagick images
