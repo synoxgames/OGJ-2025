@@ -13,6 +13,7 @@ public class PaintBrush : DrawingTool
     {
         UpdateUI();
         canvas = DrawableCanvas.instance;
+        Buy();
     }
 
     public void ChangeBrushSize(int dir)

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class DrawingTool : MonoBehaviour
 {
@@ -9,10 +11,24 @@ public abstract class DrawingTool : MonoBehaviour
     public int brushSize = 1;
     public Color paintColour;
     public bool useInterpolation = true;
-    private bool unlocked = false;
-    private int cost = 100;
+    public bool unlocked = false;
+    public int cost = 100;
+    public Text costText;
+    public GameObject costIcon;
 
     protected DrawableCanvas canvas = DrawableCanvas.instance;
+
+    private void Awake()
+    {
+        costIcon.SetActive(true);
+        costText.text = cost.ToString();
+
+        if (ToolManager.IsUnlocked(toolName))
+        {
+            unlocked = true;
+            costIcon.SetActive(false);
+        }
+    }
 
     public virtual void Buy()
     {
@@ -20,6 +36,8 @@ public abstract class DrawingTool : MonoBehaviour
         {
             CoinManager.ChangeCoins(-cost);
             unlocked = true;
+            costIcon.SetActive(false);
+            ToolManager.UnlockTool(toolName);
         }
     }
 
