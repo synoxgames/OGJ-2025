@@ -586,10 +586,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 126619229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d66215c3e400194abc7430bd4a2a8e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 410dcfc8fc68d0049a8296a01dd3ce56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageContainer: {fileID: 1297062342}
+  canvasContainer: {fileID: 1297062342}
   accuracyText: {fileID: 883259663}
   moneyText: {fileID: 2115261892}
   backgroundImage: {fileID: 886469675}
@@ -2275,55 +2275,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613052804}
   m_CullTransparentMesh: 1
---- !u!1 &684774150
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 684774152}
-  - component: {fileID: 684774151}
-  m_Layer: 0
-  m_Name: ImageComparer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &684774151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684774150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320f3ddf934c8bb46b424b30b0c198d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runAtStart: 0
-  referenceTest: {fileID: 2800000, guid: 18107e409e7316e4682a999c322ab02c, type: 3}
-  paintedTest: {fileID: 2800000, guid: 674bc1077d95d8f4aba9f771adc20c46, type: 3}
-  selectedArtRef: {fileID: 11400000, guid: 3b9863ca71a896e45876fe8a602bd056, type: 2}
-  compareScript: {fileID: 126619230}
---- !u!4 &684774152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684774150}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705241896
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,7 +4881,7 @@ Transform:
   - {fileID: 257663854}
   - {fileID: 817373490}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &2028458610
 MonoBehaviour:
@@ -4952,8 +4903,7 @@ MonoBehaviour:
   cursorPosition: {fileID: 817373490}
   topLeftCorner: {fileID: 1152660619}
   bottomRightCorner: {fileID: 257663854}
-  compareCanvas: {fileID: 126619229}
-  compareScript: {fileID: 126619230}
+  compaisonManager: {fileID: 126619230}
   canvasPixels: []
 --- !u!1 &2029317562
 GameObject:

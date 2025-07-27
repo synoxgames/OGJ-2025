@@ -1,55 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using ImageMagick;
 
-public class ImageComparer : MonoBehaviour
+public static class ImageComparer
 {
-    public bool runAtStart = true;
-    [SerializeField]
-    Texture2D referenceTest;
-    [SerializeField]
-    Texture2D paintedTest;
-    [SerializeField] public SelectedArt selectedArtRef; // Reference to the SelectedArt ScriptableObject
-    [SerializeField] CompareScript compareScript; // Reference to the CompareScript component
-
-    // Start is called before the first frame update
-    void Start()
-
-    {
-        if (selectedArtRef == null)
-        {
-            Debug.LogError("SelectedArt reference is not set!");
-            return;
-        }
-        else
-        {
-            referenceTest = selectedArtRef.artTexture;
-            compareScript.SetReferenceImage(referenceTest);
-        }
-
-
-        if (runAtStart) CompareImages(referenceTest, paintedTest, 6, 30, 3);
-    }
-
-    public int CompareGivenImage(Texture2D image)
-    {
-        paintedTest = image;
-        return CompareImages(referenceTest, image, 6, 30, 3);
-    }
-
-
     // returns the average badness per pixel of a painted image compared to a reference image
     // reference image = the image that the painted image gets compared to,
     // search radius = how many pixels away will the comparer check for simmilar colours
     // colour discount = reduces the badness of simmilar colours
     // every n pixels = only compare every n pixels, increases speed by n^2 but reduces accuracy
-    int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount, int everyNPixels)
+    public static int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount, int everyNPixels)
     {
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
-            Debug.LogError("reference and painting were not the same size");
+            Debug.LogError("reference and painting were not the same size, one of them probably wasn't imported correctly");
+            Debug.LogError("refernce: " + referenceInput.width + ", " + referenceInput.height + " painted: " + paintedInput.width + ", " + paintedInput.height);
             return -1;
         }
 
