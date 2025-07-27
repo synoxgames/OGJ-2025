@@ -8,9 +8,10 @@ using UnityEngine.SceneManagement;
 public class CutsceneManager : MonoBehaviour
 {
     [Header("Audio")]
-    public AudioSource audioSource;
-    public AudioClip walkieTalkieClip;
-    public AudioClip textBubbleClip;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip ambianceClip;
+    [SerializeField] private AudioClip walkieTalkieBeepClip;
+    [SerializeField] private AudioClip radioClip;
 
     [Header("UI Elements")]
     public Image blackScreen;
@@ -92,6 +93,7 @@ public class CutsceneManager : MonoBehaviour
         yield return StartCoroutine(textBubbleEnlarge());
         // text is then slowly typed out
         userClickedToContinue = false;
+        audioSource.PlayOneShot(radioClip); // Play the radio sound effect
         yield return typingCoroutine = StartCoroutine(textTypingEffect());
         // Wait for click after full text
         if (debug) Debug.Log("Waiting for user click after text fully displayed.");
@@ -157,6 +159,8 @@ public class CutsceneManager : MonoBehaviour
         float elapsedTime = 0f;
         Quaternion originalRotation = walkieTalkieImage.transform.rotation;
 
+        audioSource.PlayOneShot(walkieTalkieBeepClip); // Play the walkie talkie beep sound
+        audioSource.PlayOneShot(walkieTalkieBeepClip); // Play the walkie talkie beep sound
         while (elapsedTime < shakeDuration)
         {
             float z = Random.Range(-shakeMagnitude, shakeMagnitude);
@@ -165,7 +169,7 @@ public class CutsceneManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        audioSource.PlayOneShot(walkieTalkieBeepClip); // Play the walkie talkie beep sound
         walkieTalkieImage.transform.rotation = originalRotation;
     }
 
@@ -330,7 +334,7 @@ public class CutsceneManager : MonoBehaviour
         //End of the cutscene move to the next scene.
         SceneManager.LoadScene("MuseumInterior");
     }
-    
+
     public void SkipCutscene()
     {
         if (debug) Debug.Log("Cutscene skipped by user.");
