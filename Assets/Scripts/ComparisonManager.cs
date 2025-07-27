@@ -101,7 +101,7 @@ public class ComparisonManager : MonoBehaviour
         int currentAccuracy = 0;
         while (currentAccuracy < accuracy)
         {
-            currentAccuracy = (int)(currentAccuracy * 1.1) + 1;
+            currentAccuracy = Mathf.Min((int)(currentAccuracy * 1.1) + 1, accuracy);
             accuracyText.text = "Accuracy: " + currentAccuracy + "%";
             yield return new WaitForSeconds(0.1f);
         }
@@ -116,7 +116,7 @@ public class ComparisonManager : MonoBehaviour
         int currentMoney = 0;
         while (currentMoney < money)
         {
-            currentMoney = (int)(currentMoney * 1.1) + 1;
+            currentMoney = Mathf.Min((int)(currentMoney * 1.1) + 1, money);
             moneyText.text = "Money Earned: $" + currentMoney;
             yield return new WaitForSeconds(0.1f);
         }
