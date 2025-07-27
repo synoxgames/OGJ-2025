@@ -17,7 +17,7 @@ public static class ArtManager
     static string artPath = "Art";                         // Path to the art folder
 
     // load the art from the art folder, under resources
-    static void LoadArt()
+    private static void LoadArt()
     {
         artTextures = Resources.LoadAll<Texture2D>("Art");
         artDifficulty = new int[artTextures.Length];
