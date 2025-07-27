@@ -11,9 +11,12 @@ public static class ImageComparer
     // every n pixels = only compare every n pixels, increases speed by n^2 but reduces accuracy
     public static int CompareImages(Texture2D referenceInput, Texture2D paintedInput, int searchRadius, int colourDiscount, int everyNPixels)
     {
+        Debug.Log("reference: " + referenceInput.width + "," + referenceInput.height + " painted: " + paintedInput.width + "," + paintedInput.height);
+
         if (paintedInput.width != referenceInput.width || paintedInput.height != referenceInput.height)
         {
-            referenceInput.Reinitialize(paintedInput.width, paintedInput.height);
+            Debug.LogError("refernce and painting are not the same size");
+            return -1;
         }
 
         // convert the images to imageMagick images
