@@ -10,8 +10,8 @@ using UnityEngine;
 
 public static class ArtManager
 {
-    static Texture2D[] artTextures; // the art
-    static int selectedArtIndex;    // the index of the currently selected pice of art        
+    public static Texture2D[] artTextures; // the art
+    public static int selectedArtIndex = 0;    // the index of the currently selected pice of art        
     static int[] artDifficulty;     // how hard each pice of art is to copy
 
     static string artPath = "Art";                         // Path to the art folder
@@ -38,6 +38,11 @@ public static class ArtManager
     // gets a peice of art as a sprite
     public static Sprite GetArtSprite()
     {
+        if (artTextures == null)
+        {
+            LoadArt();
+        }
+
         Texture2D selectedTexture = artTextures[selectedArtIndex];
 
         // Convert the texture to a sprite
@@ -53,6 +58,10 @@ public static class ArtManager
     // gets a peice of art as a texture2D
     public static Texture2D GetArtTexture()
     {
+        if (artTextures == null)
+        {
+            LoadArt();
+        }
         return artTextures[selectedArtIndex];
     }
 
