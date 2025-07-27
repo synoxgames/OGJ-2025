@@ -27,17 +27,17 @@ public class SettingMenu : MonoBehaviour
     [SerializeField] public SelectedArt selectedArtRef;
     // Difficulty threshold defaults
     [SerializeField] private float easyUpperBound = 300; // this is the upper bound for the accuracy threshold for easy, higher is easier
-    [SerializeField] private float easyLowerBound = 160; // this is the lower bound, lower is harder
-    [SerializeField] private float mediumUpperBound = 110;
-    [SerializeField] private float mediumLowerBound = 80;
-    [SerializeField] private float hardUpperBound = 90;
-    [SerializeField] private float hardLowerBound = 50f;
+    [SerializeField] private float easyLowerBound = 260; // this is the lower bound, lower is harder
+    [SerializeField] private float mediumUpperBound = 210;
+    [SerializeField] private float mediumLowerBound = 180;
+    [SerializeField] private float hardUpperBound = 190;
+    [SerializeField] private float hardLowerBound = 100f;
     [SerializeField] private float easyDisplayTime = 5f; // time art is displayed for easy
     [SerializeField] private float mediumDisplayTime = 4f; 
     [SerializeField] private float hardDisplayTime = 3f;
-    [SerializeField] private float easyMoneyMultiplier = 0.5f; // multiplier for the money earned from this art per accuracy point
-    [SerializeField] private float mediumMoneyMultiplier = 0.25f;
-    [SerializeField] private float hardMoneyMultiplier = 0.1f;
+    [SerializeField] private float easyMoneyMultiplier = 0.7f; // multiplier for the money earned from this art per accuracy point
+    [SerializeField] private float mediumMoneyMultiplier = 0.5f;
+    [SerializeField] private float hardMoneyMultiplier = 0.25f;
     private float musicVolume = 1f;
     private float sfxVolume = 1f;
 

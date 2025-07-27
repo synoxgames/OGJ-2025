@@ -44,7 +44,7 @@ public class RevealArt : MonoBehaviour
             StartCoroutine(ButtonShake());
             return; // Not enough coins to reveal the art
         }
-        Debug.Log("Reveal method called in RevealArt script.");
+        CoinManager.ChangeCoins(-revealCost); // Deduct the cost from the player's coins
         StartCoroutine(RevealCoroutine());
     }
 
