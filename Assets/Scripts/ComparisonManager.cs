@@ -128,14 +128,17 @@ public class ComparisonManager : MonoBehaviour
             return 0; // Worst possible score
 
         // Calculate percentage within bounds
-        float accuracy = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
-        return Mathf.RoundToInt(accuracy * 100f);
+        float percent = 1f - ((badnessScore - lowerBound) / (upperBound - lowerBound));
+        percent = Mathf.Clamp01(percent); // just in case of bounds
+        accuracy = Mathf.RoundToInt(percent * 100f);
+        return accuracy;
     }
 
     IEnumerator PrintMoneyEarned(int badnessScore)
     {
-        float accuracy = GetAccuracyPercentage(badnessScore);
         moneyEarned = Mathf.RoundToInt(accuracy * selectedArtRef.moneyMultiplier);
+        if (accuracy == 0)
+            moneyEarned = 1;
         // This method will be used to display the money earned from the comparison
         // it will start from 0 up to the given money value
         moneyText.gameObject.SetActive(true);
