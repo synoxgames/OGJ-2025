@@ -34,8 +34,6 @@ public class MuseumInteriorManager : MonoBehaviour
     [Header("Debug Settings")]
     [SerializeField] public bool debug = false;             // Enable debug mode for testing purposes
 
-    private string artPath = "Art";                         // Path to the art folder
-
     private bool hasStartedFinalAnimation = false; // Flag to prevent multiple final animations
 
     void Awake()
