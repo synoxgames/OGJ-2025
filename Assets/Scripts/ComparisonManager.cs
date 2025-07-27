@@ -52,7 +52,7 @@ public class ComparisonManager : MonoBehaviour
         drawnCanvas.sprite = drawnSprite;
     }
 
-    public void StartAnimation(float accuracy)
+    public void StartAnimation(int accuracy)
     {
         Debug.Log("StartAnimation called with accuracy: " + accuracy);
         backgroundImage.gameObject.SetActive(true);
@@ -60,7 +60,7 @@ public class ComparisonManager : MonoBehaviour
         StartCoroutine(FinalAnimation(accuracy));
     }
 
-    IEnumerator FinalAnimation(float accuracy)
+    IEnumerator FinalAnimation(int accuracy)
     {
         // This method will be used to display the final animation of the art piece
         yield return StartCoroutine(DropDownImages());
@@ -96,11 +96,7 @@ public class ComparisonManager : MonoBehaviour
         yield return null;
     }
 
-<<<<<<< HEAD
-    IEnumerator PrintAccuracy(float accuracy)
-=======
     IEnumerator PrintAccuracy(int badnessScore)
->>>>>>> 9e80b856dc7bc7ce583e941369986808730cb7b2
     {
         // Calculate the accuracy percentage based on the badness score
         accuracy = GetAccuracyPercentage(badnessScore);

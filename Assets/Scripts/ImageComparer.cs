@@ -9,7 +9,7 @@ public static class ImageComparer
     // search radius = how many pixels away will the comparer check for simmilar colours
     // colour discount = reduces the badness of simmilar colours
     // every n pixels = only compare every n pixels, increases speed by n^2 but reduces accuracy
-    public static float CompareImages(Texture2D reference, Texture2D painted, int searchRadius, float colourDiscount, int everyNPixels)
+    public static int CompareImages(Texture2D reference, Texture2D painted, int searchRadius, float colourDiscount, int everyNPixels)
     {
         Debug.Log("reference: " + reference.width + "," + reference.height + " painted: " + painted.width + "," + painted.height);
 
@@ -86,7 +86,7 @@ public static class ImageComparer
 
         Debug.Log("badness: " + averageBadness);
 
-        return averageBadness;
+        return (int)(averageBadness * 255);
     }
 
     private static Color GetPixelAt(int x, int y, Texture2D image, Color[] imagePixels)
