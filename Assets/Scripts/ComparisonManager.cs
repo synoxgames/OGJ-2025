@@ -145,5 +145,8 @@ public class ComparisonManager : MonoBehaviour
             moneyText.text = "Money Earned: $" + currentMoney;
             yield return new WaitForSeconds(0.1f);
         }
+
+        // add coins to the users bank account
+        CoinManager.ChangeCoins(currentMoney);
     }
 }
