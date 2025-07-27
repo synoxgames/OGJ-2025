@@ -46,18 +46,14 @@ public class RectangleFill : DrawingTool
 
     public override void UseTool(int xPix, int yPix)
     {
-        Debug.Log(xPix + ", " + yPix);
-
         if (mouseHeld && (mouseHeldLastFrame == false))
         {
-            Debug.Log("holding Started");
             startPosX = xPix;
             startPosY = yPix;
         }
         if (mouseHeld == true && mouseHeldLastFrame == true)
         {
-            Debug.Log("holding continued");
-            // draw an oval from startPosX, startPosY to xPix, yPix
+            // draw a rectangle from startPosX, startPosY to xPix, yPix
             int xMin = Mathf.Min(startPosX, xPix);
             int yMin = Mathf.Min(startPosY, yPix);
             int xMax = Mathf.Max(startPosX, xPix);
